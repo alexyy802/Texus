@@ -34,14 +34,14 @@ with open('README.rst') as f:
     readme = f.read()
 
 extras_require = {
-    'voice': ['PyNaCl>=1.3.0,<1.5'],
+    'voice': ['PyNaCl==1.3.0'],
     'docs': [
         'sphinx==4.0.2',
         'sphinxcontrib_trio==1.1.2',
         'sphinxcontrib-websupport',
     ],
     'speed': [
-        'orjson>=3.5.4',
+        'orjson==3.5.4',
     ]
 }
 
@@ -54,12 +54,12 @@ packages = [
     'discord.ext.tasks',
 ]
 
-setup(name='discord.py',
-      author='Rapptz',
-      url='https://github.com/Rapptz/discord.py',
+setup(name='texus',
+      author='TexusDev',
+      url='https://github.com/TexusDev/texus',
       project_urls={
-        "Documentation": "https://discordpy.readthedocs.io/en/latest/",
-        "Issue tracker": "https://github.com/Rapptz/discord.py/issues",
+        "Documentation": "https://texus.readthedocs.io/en/latest/",
+        "Issue tracker": "https://github.com/texusdev/texus/issues",
       },
       version=version,
       packages=packages,
@@ -79,6 +79,7 @@ setup(name='discord.py',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Internet',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
