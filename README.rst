@@ -33,7 +33,7 @@ To install the library without full voice support, you can just run the followin
     python3 -m pip install -U texus
 
     # Windows
-    py -3 -m pip install -U discord.py
+    py -3 -m pip install -U texus
 
 Otherwise to get voice support you should run the following command:
 
