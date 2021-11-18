@@ -1,6 +1,6 @@
 """
-Discord API Wrapper
-~~~~~~~~~~~~~~~~~~~
+Texus
+~~~~~~
 
 A basic wrapper for the Discord API.
 
