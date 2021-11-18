@@ -1,8 +1,8 @@
 Texus
 ======
 
-.. image:: https://discord.com/api/guilds/853602966379560980/embed.png
-   :target: https://discord.gg/pEmrd7J448
+.. image:: https://discord.com/api/guilds/910843156231249990/embed.png
+   :target: https://discord.gg/54f7UWNsAJ
    :alt: Discord server invite
 .. image:: https://img.shields.io/pypi/v/texus.svg
    :target: https://pypi.python.org/pypi/texus
