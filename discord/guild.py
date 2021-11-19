@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -76,6 +78,7 @@ from .stage_instance import StageInstance
 from .threads import Thread, ThreadMember
 from .sticker import GuildSticker
 from .file import File
+from .welcome_screen import WelcomeScreen, WelcomeScreenChannel
 
 
 __all__ = ("Guild",)
@@ -208,22 +211,37 @@ class Guild(Hashable):
 
         They are currently as follows:
 
+        - ``ANIMATED_BANNER``: Guild can upload an animated banner.
         - ``ANIMATED_ICON``: Guild can upload an animated icon.
         - ``BANNER``: Guild can upload and use a banner. (i.e. :attr:`.banner`)
+        - ``CHANNEL_BANNER``: Guild can upload and use a channel banners.
         - ``COMMERCE``: Guild can sell things using store channels.
         - ``COMMUNITY``: Guild is a community server.
         - ``DISCOVERABLE``: Guild shows up in Server Discovery.
         - ``FEATURABLE``: Guild is able to be featured in Server Discovery.
+        - ``HAS_DIRECTORY_ENTRY``: Unknown.
+        - ``HUB``: Hubs contain a directory channel that let you find school-related, student-run servers for your school or university.
+        - ``INTERNAL_EMPLOYEE_ONLY``: Indicates that only users with the staff badge can join the guild.
         - ``INVITE_SPLASH``: Guild's invite page can have a special splash.
+        - ``LINKED_TO_HUB``: 'Guild is linked to a hub.
+        - ``MEMBER_PROFILES``: Unknown.
         - ``MEMBER_VERIFICATION_GATE_ENABLED``: Guild has Membership Screening enabled.
         - ``MONETIZATION_ENABLED``: Guild has enabled monetization.
         - ``MORE_EMOJI``: Guild has increased custom emoji slots.
         - ``MORE_STICKERS``: Guild has increased custom sticker slots.
         - ``NEWS``: Guild can create news channels.
+        - ``NEW_THREAD_PERMISSIONS``: Guild has new thread permissions.
         - ``PARTNERED``: Guild is a partnered server.
+        - ``PREMIUM_TIER_3_OVERRIDE``: Forces the server to server boosting level 3 (specifically created by Discord Staff Member "Jethro" for their personal server).
         - ``PREVIEW_ENABLED``: Guild can be viewed before being accepted via Membership Screening.
         - ``PRIVATE_THREADS``: Guild has access to create private threads.
+        - ``ROLE_ICONS``: Guild can set an image or emoji as a role icon.
+        - ``ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE``: Role subscriptions are available for purchasing.
+        - ``ROLE_SUBSCRIPTIONS_ENABLED``: Guild is able to view and manage role subscriptions.
         - ``SEVEN_DAY_THREAD_ARCHIVE``: Guild has access to the seven day archive time for threads.
+        - ``TEXT_IN_VOICE_ENABLED``: Guild has a chat button inside voice channels that opens a dedicated text channel in a sidebar similar to thread view.
+        - ``THREAD_DEFAULT_AUTO_ARCHIVE_DURATION``: Unknown, presumably used for testing changes to the thread default auto archive duration..
+        - ``THREADS_ENABLED_TESTING``: Used by bot developers to test their bots with threads in guilds with 5 or less members and a bot. Also gives the premium thread features.
         - ``THREE_DAY_THREAD_ARCHIVE``: Guild has access to the three day archive time for threads.
         - ``TICKETED_EVENTS_ENABLED``: Guild has enabled ticketed events.
         - ``VANITY_URL``: Guild can have a vanity invite URL (e.g. discord.gg/discord-api).
@@ -236,11 +254,29 @@ class Guild(Hashable):
         The number goes from 0 to 3 inclusive.
     premium_subscription_count: :class:`int`
         The number of "boosts" this guild currently has.
+    premium_progress_bar_enabled: :class:`bool`
+        Indicates if the guild has premium progress bar enabled.
+
+        .. versionadded:: 2.0
     preferred_locale: Optional[:class:`str`]
         The preferred locale for the guild. Used when filtering Server Discovery
         results to a specific language.
     nsfw_level: :class:`NSFWLevel`
         The guild's NSFW level.
+
+        .. versionadded:: 2.0
+
+    approximate_member_count: Optional[:class:`int`]
+        The approximate number of members in the guild. This is ``None`` unless the guild is obtained
+        using :meth:`Client.fetch_guild` with ``with_counts=True``.
+
+        .. versionadded:: 2.0
+
+    approximate_presence_count: Optional[:class:`int`]
+        The approximate number of members currently active in the guild.
+        This includes idle, dnd, online, and invisible members. Offline members are excluded.
+        This is ``None`` unless the guild is obtained using :meth:`Client.fetch_guild`
+        with ``with_counts=True``.
 
         .. versionadded:: 2.0
     """
@@ -266,6 +302,7 @@ class Guild(Hashable):
         "max_video_channel_users",
         "premium_tier",
         "premium_subscription_count",
+        "premium_progress_bar_enabled",
         "preferred_locale",
         "nsfw_level",
         "_members",
@@ -285,6 +322,8 @@ class Guild(Hashable):
         "_public_updates_channel_id",
         "_stage_instances",
         "_threads",
+        "approximate_member_count",
+        "approximate_presence_count",
     )
 
     _PREMIUM_GUILD_LIMITS: ClassVar[Dict[Optional[int], _GuildLimit]] = {
@@ -462,6 +501,9 @@ class Guild(Hashable):
         self.premium_subscription_count: int = (
             guild.get("premium_subscription_count") or 0
         )
+        self.premium_progress_bar_enabled: bool = (
+            guild.get("premium_progress_bar_enabled") or False
+        )
         self._system_channel_flags: int = guild.get("system_channel_flags", 0)
         self.preferred_locale: Optional[str] = guild.get("preferred_locale")
         self._discovery_splash: Optional[str] = guild.get("discovery_splash")
@@ -472,6 +514,8 @@ class Guild(Hashable):
             guild, "public_updates_channel_id"
         )
         self.nsfw_level: NSFWLevel = try_enum(NSFWLevel, guild.get("nsfw_level", 0))
+        self.approximate_presence_count = guild.get("approximate_presence_count")
+        self.approximate_member_count = guild.get("approximate_member_count")
 
         self._stage_instances: Dict[int, StageInstance] = {}
         for s in guild.get("stage_instances", []):
@@ -1433,6 +1477,7 @@ class Guild(Hashable):
         preferred_locale: str = MISSING,
         rules_channel: Optional[TextChannel] = MISSING,
         public_updates_channel: Optional[TextChannel] = MISSING,
+        premium_progress_bar_enabled: bool = MISSING,
     ) -> Guild:
         r"""|coro|
 
@@ -1510,6 +1555,8 @@ class Guild(Hashable):
             The new channel that is used for public updates from Discord. This is only available to
             guilds that contain ``PUBLIC`` in :attr:`Guild.features`. Could be ``None`` for no
             public updates channel.
+        premium_progress_bar_enabled: :class:`bool`
+            Whether the guild should have premium progress bar enabled.
         reason: Optional[:class:`str`]
             The reason for editing this guild. Shows up on the audit log.
 
@@ -1655,6 +1702,9 @@ class Guild(Hashable):
                     )
 
             fields["features"] = features
+
+        if premium_progress_bar_enabled is not MISSING:
+            fields["premium_progress_bar_enabled"] = premium_progress_bar_enabled
 
         data = await http.edit_guild(self.id, reason=reason, **fields)
         return Guild(data=data, state=self._state)
@@ -3095,3 +3145,104 @@ class Guild(Hashable):
         ws = self._state._get_websocket(self.id)
         channel_id = channel.id if channel else None
         await ws.voice_state(self.id, channel_id, self_mute, self_deaf)
+
+    async def welcome_screen(self):
+        """|coro|
+
+        Returns the :class:`WelcomeScreen` of the guild.
+
+        The guild must have ``COMMUNITY`` in :attr:`~Guild.features`.
+
+        You must have the :attr:`~Permissions.manage_guild` permission in order to get this.
+
+        .. versionadded:: 2.0
+
+        Raises
+        -------
+        Forbidden
+            You do not have the proper permissions to get this.
+        HTTPException
+            Retrieving the welcome screen failed somehow.
+        NotFound
+            The guild doesn't has a welcome screen or community feature is disabled.
+
+
+        Returns
+        --------
+        :class:`WelcomeScreen`
+            The welcome screen of guild.
+        """
+        data = await self._state.http.get_welcome_screen(self.id)
+        return WelcomeScreen(data=data, guild=self)
+
+    @overload
+    async def edit_welcome_screen(
+        self,
+        *,
+        description: Optional[str] = ...,
+        welcome_channels: Optional[List[WelcomeChannel]] = ...,
+        enabled: Optional[bool] = ...,
+    ) -> WelcomeScreen:
+        ...
+
+    @overload
+    async def edit_welcome_screen(self) -> None:
+        ...
+
+    async def edit_welcome_screen(self, **options):
+        """|coro|
+
+        A shorthand for :attr:`WelcomeScreen.edit` without fetching the welcome screen.
+
+        You must have the :attr:`~Permissions.manage_guild` permission in the
+        guild to do this.
+
+        The guild must have ``COMMUNITY`` in :attr:`Guild.features`
+
+        Parameters
+        ------------
+
+        description: Optional[:class:`str`]
+            The new description of welcome screen.
+        welcome_channels: Optional[List[:class:`WelcomeChannel`]]
+            The welcome channels. The order of the channels would be same as the passed list order.
+        enabled: Optional[:class:`bool`]
+            Whether the welcome screen should be displayed.
+        reason: Optional[:class:`str`]
+            The reason that shows up on audit log.
+
+        Raises
+        -------
+
+        HTTPException
+            Editing the welcome screen failed somehow.
+        Forbidden
+            You don't have permissions to edit the welcome screen.
+        NotFound
+            This welcome screen does not exist.
+
+        Returns
+        --------
+
+        :class:`WelcomeScreen`
+            The edited welcome screen.
+        """
+
+        welcome_channels = options.get("welcome_channels", [])
+        welcome_channels_data = []
+
+        for channel in welcome_channels:
+            if not isinstance(channel, WelcomeScreenChannel):
+                raise TypeError(
+                    "welcome_channels parameter must be a list of WelcomeScreenChannel."
+                )
+
+            welcome_channels_data.append(channel.to_dict())
+
+        options["welcome_channels"] = welcome_channels_data
+
+        if options:
+            new = await self._state.http.edit_welcome_screen(
+                self.id, options, reason=options.get("reason")
+            )
+            return WelcomeScreen(data=new, guild=self)

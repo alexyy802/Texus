@@ -50,7 +50,13 @@ class Permission:
         permission may be tied to.
     """
 
-    def __init__(self, id: Union[int, str], type: int, permission: bool = True, guild_id: int = None):
+    def __init__(
+        self,
+        id: Union[int, str],
+        type: int,
+        permission: bool = True,
+        guild_id: int = None,
+    ):
         self.id = id
         self.type = type
         self.permission = permission
@@ -60,7 +66,12 @@ class Permission:
         return {"id": self.id, "type": self.type, "permission": self.permission}
 
 
-def permission(role_id: int = None, user_id: int = None, permission: bool = True, guild_id: int = None):
+def permission(
+    role_id: int = None,
+    user_id: int = None,
+    permission: bool = True,
+    guild_id: int = None,
+):
     """The method used to specify application command permissions
     for specific users or roles using their id.
     This method is meant to be used as a decorator.
@@ -89,7 +100,7 @@ def permission(role_id: int = None, user_id: int = None, permission: bool = True
             raise ValueError("role_id or user_id must be specified!")
 
         # Create __app_cmd_perms__
-        if not hasattr(func, '__app_cmd_perms__'):
+        if not hasattr(func, "__app_cmd_perms__"):
             func.__app_cmd_perms__ = []
 
         # Append
@@ -119,11 +130,13 @@ def has_role(item: Union[int, str], guild_id: int = None):
 
     def decorator(func: Callable):
         # Create __app_cmd_perms__
-        if not hasattr(func, '__app_cmd_perms__'):
+        if not hasattr(func, "__app_cmd_perms__"):
             func.__app_cmd_perms__ = []
 
         # Permissions (Will Convert ID later in register_commands if needed)
-        app_cmd_perm = Permission(item, 1, True, guild_id)  # {"id": item, "type": 1, "permission": True}
+        app_cmd_perm = Permission(
+            item, 1, True, guild_id
+        )  # {"id": item, "type": 1, "permission": True}
 
         # Append
         func.__app_cmd_perms__.append(app_cmd_perm)
@@ -153,12 +166,14 @@ def has_any_role(*items: Union[int, str], guild_id: int = None):
 
     def decorator(func: Callable):
         # Create __app_cmd_perms__
-        if not hasattr(func, '__app_cmd_perms__'):
+        if not hasattr(func, "__app_cmd_perms__"):
             func.__app_cmd_perms__ = []
 
         # Permissions (Will Convert ID later in register_commands if needed)
         for item in items:
-            app_cmd_perm = Permission(item, 1, True, guild_id)  # {"id": item, "type": 1, "permission": True}
+            app_cmd_perm = Permission(
+                item, 1, True, guild_id
+            )  # {"id": item, "type": 1, "permission": True}
 
             # Append
             func.__app_cmd_perms__.append(app_cmd_perm)
@@ -186,11 +201,13 @@ def is_user(user: int, guild_id: int = None):
 
     def decorator(func: Callable):
         # Create __app_cmd_perms__
-        if not hasattr(func, '__app_cmd_perms__'):
+        if not hasattr(func, "__app_cmd_perms__"):
             func.__app_cmd_perms__ = []
 
         # Permissions (Will Convert ID later in register_commands if needed)
-        app_cmd_perm = Permission(user, 2, True, guild_id)  # {"id": user, "type": 2, "permission": True}
+        app_cmd_perm = Permission(
+            user, 2, True, guild_id
+        )  # {"id": user, "type": 2, "permission": True}
 
         # Append
         func.__app_cmd_perms__.append(app_cmd_perm)
@@ -217,11 +234,13 @@ def is_owner(guild_id: int = None):
 
     def decorator(func: Callable):
         # Create __app_cmd_perms__
-        if not hasattr(func, '__app_cmd_perms__'):
+        if not hasattr(func, "__app_cmd_perms__"):
             func.__app_cmd_perms__ = []
 
         # Permissions (Will Convert ID later in register_commands if needed)
-        app_cmd_perm = Permission("owner", 2, True, guild_id)  # {"id": "owner", "type": 2, "permission": True}
+        app_cmd_perm = Permission(
+            "owner", 2, True, guild_id
+        )  # {"id": "owner", "type": 2, "permission": True}
 
         # Append
         func.__app_cmd_perms__.append(app_cmd_perm)

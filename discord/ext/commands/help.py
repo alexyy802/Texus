@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -569,8 +571,16 @@ class HelpCommand:
         if sort and key is None:
             key = lambda c: c.name
 
+        # Ignore Application Commands cause they dont have hidden/docs
+        prefix_commands = [
+            command
+            for command in commands
+            if not isinstance(command, discord.commands.ApplicationCommand)
+        ]
         iterator = (
-            commands if self.show_hidden else filter(lambda c: not c.hidden, commands)
+            prefix_commands
+            if self.show_hidden
+            else filter(lambda c: not c.hidden, prefix_commands)
         )
 
         if self.verify_checks is False:

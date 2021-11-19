@@ -1,8 +1,8 @@
-Texus
-======
+texus
+==========
 
-.. image:: https://discord.com/api/guilds/853602966379560980/embed.png
-   :target: https://discord.gg/pEmrd7J448
+.. image:: https://discord.com/api/guilds/881207955029110855/embed.png
+   :target: https://texus.dev/discord
    :alt: Discord server invite
 .. image:: https://img.shields.io/pypi/v/texus.svg
    :target: https://pypi.python.org/pypi/texus
@@ -10,22 +10,24 @@ Texus
 .. image:: https://img.shields.io/pypi/pyversions/texus.svg
    :target: https://pypi.python.org/pypi/texus
    :alt: PyPI supported Python versions
+.. image:: https://img.shields.io/pypi/dm/texus?color=blue
+   :target: https://pypi.python.org/pypi/texus
+   :alt: PyPI downloads
 
-A modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
+A fork of texus. texus is a modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
 
 Key Features
 -------------
 
 - Modern Pythonic API using ``async`` and ``await``.
 - Proper rate limit handling.
-- Optimised in both speed and memory.
+- Optimised for both speed and memory usage.
+- Supports Slash Commands, Context Menus and Message Components.
 
 Installing
 ----------
 
 **Python 3.8 or higher is required**
-
-Before installing the library you need to uninstall texus or any other fork you use before changing to Texus.
 
 To install the library without full voice support, you can just run the following command:
 
@@ -47,6 +49,11 @@ Otherwise to get voice support you should run the following command:
     # Windows
     py -3 -m pip install -U texus[voice]
 
+To get our speed version With aiohttp speedup run the following command:
+
+.. code:: sh
+   
+   pip install texus[speed]
 
 To install the development version, do the following:
 
@@ -62,10 +69,10 @@ Optional Packages
 
 * `PyNaCl <https://pypi.org/project/PyNaCl/>`__ (for voice support)
 
-Please note that on Linux installing voice you must install the following packages via your favourite package manager (e.g. ``apt``, ``dnf``, etc) before running the above commands:
+Please note that while installing voice support on Linux, you must install the following packages via your preferred package manager (e.g. ``apt``, ``dnf``, etc) BEFORE running the above commands:
 
 * libffi-dev (or ``libffi-devel`` on some systems)
-* python-dev (e.g. ``python3.8-dev`` for Python 3.8)
+* python-dev (e.g. ``python3.6-dev`` for Python 3.6)
 
 Quick Example
 --------------
@@ -74,22 +81,20 @@ Quick Example
 
     import discord
 
-    class MyClient(discord.Client):
-        async def on_ready(self):
-            print('Logged on as', self.user)
+    bot = discord.Bot()
+    
+    @bot.slash_command()
+    async def hello(ctx, name: str = None):
+        name = name or ctx.author.name
+        await ctx.respond(f"Hello {name}!")
+        
+    @bot.user_command(name="Say Hello")
+    async def hi(ctx, user):
+        await ctx.respond(f"{ctx.author.mention} says hello to {user.name}!")
+        
+    bot.run("token")
 
-        async def on_message(self, message):
-            # don't respond to ourselves
-            if message.author == self.user:
-                return
-
-            if message.content == 'ping':
-                await message.channel.send('pong')
-
-    client = MyClient()
-    client.run('token')
-
-Bot Example
+Normal Commands Example
 ~~~~~~~~~~~~~
 
 .. code:: py
@@ -97,19 +102,22 @@ Bot Example
     import discord
     from discord.ext import commands
 
-    bot = commands.Bot(command_prefix='>')
+    bot = commands.Bot(command_prefix=">")
 
     @bot.command()
     async def ping(ctx):
-        await ctx.send('pong')
+        await ctx.send("pong")
 
-    bot.run('token')
+    bot.run("token")
 
 You can find more examples in the examples directory.
+
+Note: Make sure you do not reveal your bot token to anyone, it can grant access to your bot.
 
 Links
 ------
 
-- `Documentation <https://texus.readthedocs.io/en/latest/index.html>`_
-- `Official Discord Server <https://discord.gg/pEmrd7J448>`_
+- `Documentation <https://docs.texus.dev/en/master/index.html>`_
+- `Official Discord Server <https://texus.dev/discord>`_
+- `Discord Developers <https://discord.gg/discord-developers>`_
 - `Discord API <https://discord.gg/discord-api>`_

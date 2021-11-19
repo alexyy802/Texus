@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -330,6 +332,39 @@ class Colour:
         .. versionadded:: 2.0
         """
         return cls(0xFEE75C)
+
+    @classmethod
+    def nitro_pink(cls: Type[CT]) -> CT:
+        """A factory method that returns a :class:`Colour` with a value of ``0xf47fff``.
+
+        .. versionadded:: 2.0
+        """
+        return cls(0xF47FFF)
+
+    @classmethod
+    def embed_background(cls: Type[CT], theme: str = "dark") -> CT:
+        """A factory method that returns a :class:`Color` corresponding to the embed colors on discord clients, with a value of
+        ``0x2F3136`` (dark)
+        ``0xf2f3f5`` (light)
+        ``0x000000`` (amoled).
+
+        .. versionadded:: 2.0
+
+        Parameters
+        -----------
+        theme: :class:`str`
+            The theme color to apply, must be one of "dark", "light", or "amoled".
+        """
+        themes_cls = {
+            "dark": 0x2F3136,
+            "light": 0xF2F3F5,
+            "amoled": 0x000000,
+        }
+
+        if theme not in themes_cls:
+            raise TypeError('Theme must be "dark", "light", or "amoled".')
+
+        return cls(themes_cls[theme])
 
 
 Color = Colour

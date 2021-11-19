@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -196,7 +198,7 @@ class HTTPClient:
         self.proxy_auth: Optional[aiohttp.BasicAuth] = proxy_auth
         self.use_clock: bool = not unsync_clock
 
-        user_agent = "DiscordBot (https://github.com/TexusDev/Texus {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
+        user_agent = "DiscordBot (https://github.com/TexusDev/pycord {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent: str = user_agent.format(
             __version__, sys.version_info, aiohttp.__version__
         )
@@ -1995,6 +1997,30 @@ class HTTPClient:
             target=target,
         )
         return self.request(r, reason=reason)
+
+    # Welcome Screen
+
+    def get_welcome_screen(
+        self, guild_id: Snowflake
+    ) -> Response[welcome_screen.WelcomeScreen]:
+        return self.request(
+            Route("GET", "/guilds/{guild_id}/welcome-screen", guild_id=guild_id)
+        )
+
+    def edit_welcome_screen(
+        self, guild_id: Snowflake, payload: Any, *, reason: Optional[str] = None
+    ) -> Response[welcome_screen.WelcomeScreen]:
+        keys = (
+            "description",
+            "welcome_channels",
+            "enabled",
+        )
+        payload = {key: val for key, val in payload.items() if key in keys}
+        return self.request(
+            Route("PATCH", "/guilds/{guild_id}/welcome-screen", guild_id=guild_id),
+            json=payload,
+            reason=reason,
+        )
 
     # Voice management
 

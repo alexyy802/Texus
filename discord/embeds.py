@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -452,6 +454,21 @@ class Embed:
 
         return self
 
+    def remove_image(self: E) -> E:
+        """Removes the embed's image.
+
+        This function returns the class instance to allow for fluent-style
+        chaining.
+
+        .. versionadded:: 2.0
+        """
+        try:
+            del self._image
+        except AttributeError:
+            pass
+
+        return self
+
     @property
     def thumbnail(self) -> _EmbedMediaProxy:
         """Returns an ``EmbedProxy`` denoting the thumbnail contents.
@@ -491,6 +508,21 @@ class Embed:
             self._thumbnail = {
                 "url": str(url),
             }
+
+        return self
+
+    def remove_thumbnail(self: E) -> E:
+        """Removes the embed's thumbnail.
+
+        This function returns the class instance to allow for fluent-style
+        chaining.
+
+        .. versionadded:: 2.0
+        """
+        try:
+            del self._thumbnail
+        except AttributeError:
+            pass
 
         return self
 
