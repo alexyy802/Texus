@@ -14,7 +14,7 @@ __title__ = "texus"
 __author__ = "TexusDev"
 __license__ = "MIT"
 __copyright__ = "Copyright 2015-2021 Rapptz, Copyright 2021-present TexusDev"
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
