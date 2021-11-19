@@ -57,11 +57,8 @@ __all__ = (
     "InteractionType",
     "InteractionResponseType",
     "NSFWLevel",
-<<<<<<< Updated upstream
     "SlashCommandOptionType",
-=======
     "EmbeddedActivity",
->>>>>>> Stashed changes
 )
 
 
@@ -637,8 +634,6 @@ class NSFWLevel(Enum, comparable=True):
     safe = 2
     age_restricted = 3
 
-
-<<<<<<< Updated upstream
 T = TypeVar("T")
 
 
@@ -660,8 +655,6 @@ def try_enum(cls: Type[T], val: Any) -> T:
         return create_unknown_value(cls, val)
 
 
-=======
->>>>>>> Stashed changes
 class SlashCommandOptionType(Enum):
     sub_command = 1
     sub_command_group = 2
@@ -710,9 +703,6 @@ class SlashCommandOptionType(Enum):
         if datatype.__name__ == "Mentionable":
             return cls.mentionable
 
-<<<<<<< Updated upstream
-        raise TypeError(f"Invalid class {datatype} used as an input type for an Option")
-=======
         # TODO: Improve the error message
         raise TypeError(f"Invalid class {datatype} used as an input type for an Option")
 
@@ -770,4 +760,3 @@ def try_enum(cls: Type[T], val: Any) -> T:
         return cls._enum_value_map_[val]  # type: ignore
     except (KeyError, TypeError, AttributeError):
         return create_unknown_value(cls, val)
->>>>>>> Stashed changes
