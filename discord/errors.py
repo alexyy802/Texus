@@ -55,16 +55,13 @@ __all__ = (
     "ConnectionClosed",
     "PrivilegedIntentsRequired",
     "InteractionResponded",
-<<<<<<< Updated upstream
     "ValidationError",
-=======
     "ExtensionError",
     "ExtensionAlreadyLoaded",
     "ExtensionNotLoaded",
     "NoEntryPointError",
     "ExtensionFailed",
     "ExtensionNotFound",
->>>>>>> Stashed changes
 )
 
 
