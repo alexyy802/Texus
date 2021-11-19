@@ -65,6 +65,7 @@ from .bot import *
 from .commands import *
 from .cog import Cog
 from .welcome_screen import *
+from .cli import *
 
 
 class VersionInfo(NamedTuple):
