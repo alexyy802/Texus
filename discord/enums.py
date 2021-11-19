@@ -55,7 +55,7 @@ __all__ = (
     "InteractionType",
     "InteractionResponseType",
     "NSFWLevel",
-    "SlashCommandOptionType"
+    "SlashCommandOptionType",
 )
 
 
@@ -627,6 +627,7 @@ def try_enum(cls: Type[T], val: Any) -> T:
     except (KeyError, TypeError, AttributeError):
         return create_unknown_value(cls, val)
 
+
 class SlashCommandOptionType(Enum):
     sub_command = 1
     sub_command_group = 2
@@ -642,14 +643,14 @@ class SlashCommandOptionType(Enum):
 
     @classmethod
     def from_datatype(cls, datatype):
-        if isinstance(datatype, tuple): # typing.Union has been used
+        if isinstance(datatype, tuple):  # typing.Union has been used
             datatypes = [cls.from_datatype(op) for op in datatype]
             if all([x == cls.channel for x in datatypes]):
                 return cls.channel
             elif set(datatypes) <= {cls.role, cls.user}:
                 return cls.mentionable
             else:
-                raise TypeError('Invalid usage of typing.Union')
+                raise TypeError("Invalid usage of typing.Union")
 
         if issubclass(datatype, str):
             return cls.string
@@ -663,9 +664,11 @@ class SlashCommandOptionType(Enum):
         if datatype.__name__ in ["Member", "User"]:
             return cls.user
         if datatype.__name__ in [
-            "GuildChannel", "TextChannel",
-            "VoiceChannel", "StageChannel",
-            "CategoryChannel"
+            "GuildChannel",
+            "TextChannel",
+            "VoiceChannel",
+            "StageChannel",
+            "CategoryChannel",
         ]:
             return cls.channel
         if datatype.__name__ == "Role":
@@ -673,4 +676,4 @@ class SlashCommandOptionType(Enum):
         if datatype.__name__ == "Mentionable":
             return cls.mentionable
 
-        raise TypeError(f'Invalid class {datatype} used as an input type for an Option')
+        raise TypeError(f"Invalid class {datatype} used as an input type for an Option")

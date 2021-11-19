@@ -20,11 +20,7 @@ DEALINGS IN THE SOFTWARE.
 """
 
 
-from typing import (
-    Optional,
-    Union,
-    TYPE_CHECKING
-)
+from typing import Optional, Union, TYPE_CHECKING
 
 import discord.abc
 
@@ -38,6 +34,7 @@ from ..member import Member
 from ..message import Message
 from ..user import User
 from ..utils import cached_property
+
 
 class ApplicationContext(discord.abc.Messageable):
     """Context For Application Commands"""
@@ -87,7 +84,11 @@ class ApplicationContext(discord.abc.Messageable):
 
     @property
     def respond(self):
-        return self.followup.send if self.response.is_done else self.interaction.response.send_message
+        return (
+            self.followup.send
+            if self.response.is_done
+            else self.interaction.response.send_message
+        )
 
     send = respond
 
@@ -110,5 +111,3 @@ class ApplicationContext(discord.abc.Messageable):
     @property
     def edit(self):
         return self.interaction.edit_original_message
-
-

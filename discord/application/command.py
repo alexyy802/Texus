@@ -29,14 +29,7 @@ from discord.types.channel import VoiceChannel, TextChannel
 import functools
 import inspect
 from collections import OrderedDict
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Union
-)
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from ..enums import SlashCommandOptionType, ChannelType
 from ..member import Member
@@ -47,6 +40,7 @@ from ..utils import find, get_or_fetch, async_all
 
 from ..errors import DiscordException, NotFound, ValidationError, ClientException
 from .errors import ApplicationCommandError, CheckFailure, ApplicationCommandInvokeError
+
 
 def wrap_callback(coro):
     @functools.wraps(coro)
@@ -60,7 +54,9 @@ def wrap_callback(coro):
         except Exception as exc:
             raise ApplicationCommandInvokeError(exc) from exc
         return ret
+
     return wrapped
+
 
 def hooked_wrapped_callback(command, ctx, coro):
     @functools.wraps(coro)
@@ -76,15 +72,19 @@ def hooked_wrapped_callback(command, ctx, coro):
         finally:
             await command.call_after_hooks(ctx)
         return ret
+
     return wrapped
+
 
 class _BaseCommand:
     __slots__ = ()
+
 
 class ApplicationCommand(_BaseCommand):
     """The base for application commands
     Added in texus v2.1.0
     """
+
     cog = None
 
     def __repr__(self):
@@ -107,7 +107,9 @@ class ApplicationCommand(_BaseCommand):
         ctx.command = self
 
         if not await self.can_run(ctx):
-            raise CheckFailure(f'The check functions for the command {self.name} failed')
+            raise CheckFailure(
+                f"The check functions for the command {self.name} failed"
+            )
 
         # TODO: Add cooldown
 
@@ -122,7 +124,9 @@ class ApplicationCommand(_BaseCommand):
     async def can_run(self, ctx: ApplicationContext) -> bool:
 
         if not await ctx.bot.can_run(ctx):
-            raise CheckFailure(f'The global check functions for command {self.name} failed.')
+            raise CheckFailure(
+                f"The global check functions for command {self.name} failed."
+            )
 
         predicates = self.checks
         if not predicates:
@@ -152,7 +156,7 @@ class ApplicationCommand(_BaseCommand):
                     wrapped = wrap_callback(local)
                     await wrapped(ctx, error)
         finally:
-            ctx.bot.dispatch('application_command_error', ctx, error)
+            ctx.bot.dispatch("application_command_error", ctx, error)
 
     def _get_signature_parameters(self):
         return OrderedDict(inspect.signature(self.callback).parameters)
@@ -173,15 +177,14 @@ class ApplicationCommand(_BaseCommand):
         """
 
         if not asyncio.iscoroutinefunction(coro):
-            raise TypeError('The error handler must be a coroutine.')
+            raise TypeError("The error handler must be a coroutine.")
 
         self.on_error = coro
         return coro
 
     def has_error_handler(self) -> bool:
-        """:class:`bool`: Checks whether the command has an error handler registered.
-        """
-        return hasattr(self, 'on_error')
+        """:class:`bool`: Checks whether the command has an error handler registered."""
+        return hasattr(self, "on_error")
 
     def before_invoke(self, coro):
         """A decorator that registers a coroutine as a pre-invoke hook.
@@ -200,7 +203,7 @@ class ApplicationCommand(_BaseCommand):
             The coroutine passed is not actually a coroutine.
         """
         if not asyncio.iscoroutinefunction(coro):
-            raise TypeError('The pre-invoke hook must be a coroutine.')
+            raise TypeError("The pre-invoke hook must be a coroutine.")
 
         self._before_invoke = coro
         return coro
@@ -222,7 +225,7 @@ class ApplicationCommand(_BaseCommand):
             The coroutine passed is not actually a coroutine.
         """
         if not asyncio.iscoroutinefunction(coro):
-            raise TypeError('The post-invoke hook must be a coroutine.')
+            raise TypeError("The post-invoke hook must be a coroutine.")
 
         self._after_invoke = coro
         return coro
@@ -233,7 +236,7 @@ class ApplicationCommand(_BaseCommand):
         cog = self.cog
         if self._before_invoke is not None:
             # should be cog if @commands.before_invoke is used
-            instance = getattr(self._before_invoke, '__self__', cog)
+            instance = getattr(self._before_invoke, "__self__", cog)
             # __self__ only exists for methods, not functions
             # however, if @command.before_invoke is used, it will be a function
             if instance:
@@ -255,7 +258,7 @@ class ApplicationCommand(_BaseCommand):
     async def call_after_hooks(self, ctx: ApplicationContext) -> None:
         cog = self.cog
         if self._after_invoke is not None:
-            instance = getattr(self._after_invoke, '__self__', cog)
+            instance = getattr(self._after_invoke, "__self__", cog)
             if instance:
                 await self._after_invoke(instance, ctx)  # type: ignore
             else:
@@ -283,7 +286,7 @@ class ApplicationCommand(_BaseCommand):
             command = command.parent
             entries.append(command.name)
 
-        return ' '.join(reversed(entries))
+        return " ".join(reversed(entries))
 
     def qualified_name(self) -> str:
         """:class:`str`: Retrieves the fully qualified command name.
@@ -295,7 +298,7 @@ class ApplicationCommand(_BaseCommand):
         parent = self.full_parent_name
 
         if parent:
-            return parent + ' ' + self.name
+            return parent + " " + self.name
         else:
             return self.name
 
@@ -361,19 +364,21 @@ class SlashCommand(ApplicationCommand):
         )
         validate_chat_input_description(description)
         self.description: str = description
-        self.parent = kwargs.get('parent')
+        self.parent = kwargs.get("parent")
         self.is_subcommand: bool = self.parent is not None
 
         self.cog = None
 
         params = self._get_signature_parameters()
-        self.options: List[Option] = kwargs.get('options') or self._parse_options(params)
+        self.options: List[Option] = kwargs.get("options") or self._parse_options(
+            params
+        )
 
         try:
             checks = func.__commands_checks__
             checks.reverse()
         except AttributeError:
-            checks = kwargs.get('checks', [])
+            checks = kwargs.get("checks", [])
 
         self.checks = checks
 
@@ -382,7 +387,9 @@ class SlashCommand(ApplicationCommand):
 
         # Permissions
         self.default_permission = kwargs.get("default_permission", True)
-        self.permissions: List[Permission] = getattr(func, "__app_cmd_perms__", []) + kwargs.get("permissions", [])
+        self.permissions: List[Permission] = getattr(
+            func, "__app_cmd_perms__", []
+        ) + kwargs.get("permissions", [])
         if self.permissions and self.default_permission:
             self.default_permission = False
 
@@ -417,16 +424,16 @@ class SlashCommand(ApplicationCommand):
                         option.__args__[0], "No description provided", required=False
                     )
                 else:
-                    option = Option(
-                        option.__args__, "No description provided"
-                    )
+                    option = Option(option.__args__, "No description provided")
 
             if not isinstance(option, Option):
                 option = Option(option, "No description provided")
                 if p_obj.default != inspect.Parameter.empty:
                     option.required = False
 
-            option.default = option.default if option.default is not None else p_obj.default
+            option.default = (
+                option.default if option.default is not None else p_obj.default
+            )
 
             if option.default == inspect.Parameter.empty:
                 option.default = None
@@ -440,9 +447,10 @@ class SlashCommand(ApplicationCommand):
         return final_options
 
     def _is_typing_union(self, annotation):
-        return (
-                getattr(annotation, '__origin__', None) is Union
-                or type(annotation) is getattr(types, "UnionType", Union)
+        return getattr(annotation, "__origin__", None) is Union or type(
+            annotation
+        ) is getattr(
+            types, "UnionType", Union
         )  # type: ignore
 
     def _is_typing_optional(self, annotation):
@@ -462,9 +470,9 @@ class SlashCommand(ApplicationCommand):
 
     def __eq__(self, other) -> bool:
         return (
-                isinstance(other, SlashCommand)
-                and other.name == self.name
-                and other.description == self.description
+            isinstance(other, SlashCommand)
+            and other.name == self.name
+            and other.description == self.description
         )
 
     async def _invoke(self, ctx: ApplicationContext) -> None:
@@ -476,9 +484,9 @@ class SlashCommand(ApplicationCommand):
 
             # Checks if input_type is user, role or channel
             if (
-                    SlashCommandOptionType.user.value
-                    <= op.input_type.value
-                    <= SlashCommandOptionType.role.value
+                SlashCommandOptionType.user.value
+                <= op.input_type.value
+                <= SlashCommandOptionType.role.value
             ):
                 name = "member" if op.input_type.name == "user" else op.input_type.name
                 arg = await get_or_fetch(ctx.guild, name, int(arg), default=int(arg))
@@ -489,7 +497,10 @@ class SlashCommand(ApplicationCommand):
                 if arg is None:
                     arg = ctx.guild.get_role(arg_id) or arg_id
 
-            elif op.input_type == SlashCommandOptionType.string and op._converter is not None:
+            elif (
+                op.input_type == SlashCommandOptionType.string
+                and op._converter is not None
+            ):
                 arg = await op._converter.convert(ctx, arg)
 
             kwargs[op._parameter_name] = arg
@@ -509,10 +520,9 @@ class SlashCommand(ApplicationCommand):
         for op in ctx.interaction.data.get("options", []):
             if op.get("focused", False):
                 option = find(lambda o: o.name == op["name"], self.options)
-                values.update({
-                    i["name"]: i["value"]
-                    for i in ctx.interaction.data["options"]
-                })
+                values.update(
+                    {i["name"]: i["value"] for i in ctx.interaction.data["options"]}
+                )
                 ctx.command = self
                 ctx.focused = option
                 ctx.value = op.get("value")
@@ -528,10 +538,12 @@ class SlashCommand(ApplicationCommand):
                     result = await result
 
                 choices = [
-                              o if isinstance(o, OptionChoice) else OptionChoice(o)
-                              for o in result
-                          ][:25]
-                return await ctx.interaction.response.send_autocomplete_result(choices=choices)
+                    o if isinstance(o, OptionChoice) else OptionChoice(o)
+                    for o in result
+                ][:25]
+                return await ctx.interaction.response.send_autocomplete_result(
+                    choices=choices
+                )
 
     def copy(self):
         """Makes A Copy Of The Command
@@ -571,8 +583,8 @@ class SlashCommand(ApplicationCommand):
 
 
 channel_type_map = {
-    'TextChannel': ChannelType.text,
-    'VoiceChannel': ChannelType.voice,
-    'StageChannel': ChannelType.stage_voice,
-    'CategoryChannel': ChannelType.category
+    "TextChannel": ChannelType.text,
+    "VoiceChannel": ChannelType.voice,
+    "StageChannel": ChannelType.stage_voice,
+    "CategoryChannel": ChannelType.category,
 }
