@@ -74,7 +74,7 @@ packages = [
 
 setup(
     name="texus",
-    author="texus Development",
+    author="Texus Development",
     url="https://github.com/TexusDev/texus",
     project_urls={
         "Documentation": "https://texus.readthedocs.io/en/latest/",
