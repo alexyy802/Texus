@@ -25,6 +25,8 @@ Installing
 
 **Python 3.8 or higher is required**
 
+Before installing the library you need to uninstall discord.py or any other fork you use before changing to Texus.
+
 To install the library without full voice support, you can just run the following command:
 
 .. code:: sh
