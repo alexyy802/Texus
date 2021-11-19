@@ -94,6 +94,7 @@ if TYPE_CHECKING:
         sticker,
     )
     from .types.snowflake import Snowflake, SnowflakeList
+    from .types.message import Attachment
 
     from types import TracebackType
 
@@ -591,6 +592,70 @@ class HTTPClient:
             message_reference=message_reference,
             stickers=stickers,
             components=components,
+        )
+
+    def edit_multipart_helper(
+        self,
+        route: Route,
+        files: Sequence[File],
+        **payload,
+    ) -> Response[message.Message]:
+        form = []
+
+        form.append({"name": "payload_json", "value": utils._to_json(payload)})
+        if len(files) == 1:
+            file = files[0]
+            form.append(
+                {
+                    "name": "file",
+                    "value": file.fp,
+                    "filename": file.filename,
+                    "content_type": "application/octet-stream",
+                }
+            )
+        else:
+            for index, file in enumerate(files):
+                form.append(
+                    {
+                        "name": f"file{index}",
+                        "value": file.fp,
+                        "filename": file.filename,
+                        "content_type": "application/octet-stream",
+                    }
+                )
+
+        return self.request(route, form=form, files=files)
+
+    def edit_files(
+        self,
+        channel_id: Snowflake,
+        message_id: Snowflake,
+        files: Sequence[File],
+        **fields,
+    ) -> Response[message.Message]:
+        r = Route(
+            "PATCH",
+            f"/channels/{channel_id}/messages/{message_id}",
+            channel_id=channel_id,
+            message_id=message_id,
+        )
+        payload: Dict[str, Any] = {}
+        if "attachments" in fields:
+            payload["attachments"] = fields["attachments"]
+        if "flags" in fields:
+            payload["flags"] = fields["flags"]
+        if "content" in fields:
+            payload["content"] = fields["content"]
+        if "embeds" in fields:
+            payload["embeds"] = fields["embeds"]
+        if "allowed_mentions" in fields:
+            payload["allowed_mentions"] = fields["allowed_mentions"]
+        if "components" in fields:
+            payload["components"] = fields["components"]
+        return self.edit_multipart_helper(
+            r,
+            files=files,
+            **payload,
         )
 
     def delete_message(
@@ -1247,8 +1312,13 @@ class HTTPClient:
             Route("DELETE", "/users/@me/guilds/{guild_id}", guild_id=guild_id)
         )
 
-    def get_guild(self, guild_id: Snowflake) -> Response[guild.Guild]:
-        return self.request(Route("GET", "/guilds/{guild_id}", guild_id=guild_id))
+    def get_guild(
+        self, guild_id: Snowflake, *, with_counts=True
+    ) -> Response[guild.Guild]:
+        params = {"with_counts": int(with_counts)}
+        return self.request(
+            Route("GET", "/guilds/{guild_id}", guild_id=guild_id), params=params
+        )
 
     def delete_guild(self, guild_id: Snowflake) -> Response[None]:
         return self.request(Route("DELETE", "/guilds/{guild_id}", guild_id=guild_id))
@@ -1288,6 +1358,7 @@ class HTTPClient:
             "rules_channel_id",
             "public_updates_channel_id",
             "preferred_locale",
+            "premium_progress_bar_enabled",
         )
 
         payload = {k: v for k, v in fields.items() if k in valid_keys}
@@ -1806,7 +1877,15 @@ class HTTPClient:
             guild_id=guild_id,
             role_id=role_id,
         )
-        valid_keys = ("name", "permissions", "color", "hoist", "mentionable")
+        valid_keys = (
+            "name",
+            "permissions",
+            "color",
+            "hoist",
+            "mentionable",
+            "icon",
+            "unicode_emoji",
+        )
         payload = {k: v for k, v in fields.items() if k in valid_keys}
         return self.request(r, json=payload, reason=reason)
 
@@ -2140,6 +2219,20 @@ class HTTPClient:
         r = Route(
             "PUT",
             "/applications/{application_id}/guilds/{guild_id}/commands",
+            application_id=application_id,
+            guild_id=guild_id,
+        )
+        return self.request(r, json=payload)
+
+    def bulk_upsert_command_permissions(
+        self,
+        application_id: Snowflake,
+        guild_id: Snowflake,
+        payload: List[interactions.EditApplicationCommand],
+    ) -> Response[List[interactions.ApplicationCommand]]:
+        r = Route(
+            "PUT",
+            "/applications/{application_id}/guilds/{guild_id}/commands/permissions",
             application_id=application_id,
             guild_id=guild_id,
         )
