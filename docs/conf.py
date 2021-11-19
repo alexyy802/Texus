@@ -1,5 +1,5 @@
 #
-# discord.py documentation build configuration file, created by
+# texus documentation build configuration file, created by
 # sphinx-quickstart on Fri Aug 21 05:43:30 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -270,7 +270,7 @@ html_js_files = [
 ]
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'discord.pydoc'
+htmlhelp_basename = 'texusdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -292,7 +292,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'discord.py.tex', 'discord.py Documentation',
+  ('index', 'texus.tex', 'texus Documentation',
    'Rapptz', 'manual'),
 ]
 
