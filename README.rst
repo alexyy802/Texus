@@ -47,6 +47,11 @@ Otherwise to get voice support you should run the following command:
     # Windows
     py -3 -m pip install -U texus[voice]
 
+To get our speed version With aiohttp speedup run the following command:
+
+.. code:: sh
+   
+   pip install texus[speed]
 
 To install the development version, do the following:
 
