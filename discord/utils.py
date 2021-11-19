@@ -1068,7 +1068,6 @@ def format_dt(dt: datetime.datetime, /, style: Optional[TimestampStyle] = None) 
     return f"<t:{int(dt.timestamp())}:{style}>"
 
 
-<<<<<<< Updated upstream
 async def get_or_fetch(obj, attr: str, id: int, *, default: Any = MISSING):
     getter = getattr(obj, f"get_{attr}")(id)
     if getter is None:
@@ -1080,7 +1079,6 @@ async def get_or_fetch(obj, attr: str, id: int, *, default: Any = MISSING):
             else:
                 raise
     return getter
-=======
 def generate_snowflake(dt: Optional[datetime.datetime] = None) -> int:
     """Returns a numeric snowflake pretending to be created at the given date but more accurate and random than time_snowflake.
     If dt is not passed, it makes one from the current time using utcnow.
@@ -1153,4 +1151,3 @@ def basic_autocomplete(
         return ([x for x in _values if x.lower().startswith(ctx.value.lower())])[:25]
 
     return autocomplete_callback
->>>>>>> Stashed changes
