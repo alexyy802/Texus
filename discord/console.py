@@ -30,8 +30,8 @@ from discord import __init__
 def main() -> None:
     """Print package info and exit."""
     path = os.path.abspath(os.path.dirname(_about.__file__))
-    sha1 = _init__.__git_sha1__[:8]
-    version = _init_.__version__
+    sha1 = __init__.__git_sha1__[:8]
+    version = __init_.__version__
     py_impl = platform.python_implementation()
     py_ver = platform.python_version()
     py_compiler = platform.python_compiler()
