@@ -84,6 +84,7 @@ __all__ = (
     "escape_mentions",
     "as_chunks",
     "format_dt",
+    "get_or_fetch"
 )
 
 DISCORD_EPOCH = 1420070400000
@@ -1044,3 +1045,15 @@ def format_dt(dt: datetime.datetime, /, style: Optional[TimestampStyle] = None) 
     if style is None:
         return f"<t:{int(dt.timestamp())}>"
     return f"<t:{int(dt.timestamp())}:{style}>"
+
+async def get_or_fetch(obj, attr: str, id: int, *, default: Any = MISSING):
+    getter = getattr(obj, f'get_{attr}')(id)
+    if getter is None:
+        try:
+            getter = await getattr(obj, f'fetch_{attr}')(id)
+        except HTTPException:
+            if default is not MISSING:
+                return default
+            else:
+                raise
+    return getter
