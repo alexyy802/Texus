@@ -87,12 +87,9 @@ __all__ = (
     "escape_mentions",
     "as_chunks",
     "format_dt",
-<<<<<<< Updated upstream
     "get_or_fetch",
-=======
     "basic_autocomplete",
     "generate_snowflake",
->>>>>>> Stashed changes
 )
 
 DISCORD_EPOCH = 1420070400000
