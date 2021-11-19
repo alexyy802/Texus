@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -55,7 +57,11 @@ __all__ = (
     "InteractionType",
     "InteractionResponseType",
     "NSFWLevel",
+<<<<<<< Updated upstream
     "SlashCommandOptionType",
+=======
+    "EmbeddedActivity",
+>>>>>>> Stashed changes
 )
 
 
@@ -201,6 +207,8 @@ class ChannelType(Enum):
     public_thread = 11
     private_thread = 12
     stage_voice = 13
+    directory = 14
+    forum = 15
 
     def __str__(self):
         return self.name
@@ -230,6 +238,7 @@ class MessageType(Enum):
     application_command = 20
     thread_starter_message = 21
     guild_invite_reminder = 22
+    context_menu_command = 23
 
 
 class VoiceRegion(Enum):
@@ -301,6 +310,7 @@ class Status(Enum):
     dnd = "dnd"
     do_not_disturb = "dnd"
     invisible = "invisible"
+    streaming = "streaming"
 
     def __str__(self):
         return self.value
@@ -372,6 +382,9 @@ class AuditLogAction(Enum):
     sticker_create           = 90
     sticker_update           = 91
     sticker_delete           = 92
+    scheduled_event_create    = 100
+    scheduled_event_update    = 101
+    scheduled_event_delete    = 102
     thread_create            = 110
     thread_update            = 111
     thread_delete            = 112
@@ -422,6 +435,9 @@ class AuditLogAction(Enum):
             AuditLogAction.sticker_create:        AuditLogActionCategory.create,
             AuditLogAction.sticker_update:        AuditLogActionCategory.update,
             AuditLogAction.sticker_delete:        AuditLogActionCategory.delete,
+            AuditLogAction.scheduled_event_create: AuditLogActionCategory.create,
+            AuditLogAction.scheduled_event_update: AuditLogActionCategory.update,
+            AuditLogAction.scheduled_event_delete: AuditLogActionCategory.delete,
             AuditLogAction.thread_create:         AuditLogActionCategory.create,
             AuditLogAction.thread_update:         AuditLogActionCategory.update,
             AuditLogAction.thread_delete:         AuditLogActionCategory.delete,
@@ -458,6 +474,8 @@ class AuditLogAction(Enum):
             return "stage_instance"
         elif v < 93:
             return "sticker"
+        elif v < 103:
+            return "scheduled_event"
         elif v < 113:
             return "thread"
 
@@ -474,12 +492,16 @@ class UserFlags(Enum):
     hypesquad_balance = 256
     early_supporter = 512
     team_user = 1024
+    partner_or_verification_application = 2048
     system = 4096
     has_unread_urgent_messages = 8192
     bug_hunter_level_2 = 16384
+    underage_deleted = 32768
     verified_bot = 65536
     verified_bot_developer = 131072
     discord_certified_moderator = 262144
+    bot_http_interactions = 524288
+    spammer = 1048576
 
 
 class ActivityType(Enum):
@@ -546,6 +568,7 @@ class InteractionType(Enum):
     ping = 1
     application_command = 2
     component = 3
+    auto_complete = 4
 
 
 class InteractionResponseType(Enum):
@@ -556,6 +579,7 @@ class InteractionResponseType(Enum):
     deferred_channel_message = 5  # (with source)
     deferred_message_update = 6  # for components
     message_update = 7  # for components
+    auto_complete_result = 8  # for autocomplete interactions
 
 
 class VideoQualityMode(Enum):
@@ -594,6 +618,13 @@ class ButtonStyle(Enum):
         return self.value
 
 
+class ApplicationType(Enum):
+    game = 1
+    music = 2
+    ticketed_events = 3
+    guild_role_subscriptions = 4
+
+
 class StagePrivacyLevel(Enum):
     public = 1
     closed = 2
@@ -607,6 +638,7 @@ class NSFWLevel(Enum, comparable=True):
     age_restricted = 3
 
 
+<<<<<<< Updated upstream
 T = TypeVar("T")
 
 
@@ -628,6 +660,8 @@ def try_enum(cls: Type[T], val: Any) -> T:
         return create_unknown_value(cls, val)
 
 
+=======
+>>>>>>> Stashed changes
 class SlashCommandOptionType(Enum):
     sub_command = 1
     sub_command_group = 2
@@ -676,4 +710,64 @@ class SlashCommandOptionType(Enum):
         if datatype.__name__ == "Mentionable":
             return cls.mentionable
 
+<<<<<<< Updated upstream
         raise TypeError(f"Invalid class {datatype} used as an input type for an Option")
+=======
+        # TODO: Improve the error message
+        raise TypeError(f"Invalid class {datatype} used as an input type for an Option")
+
+
+class EmbeddedActivity(Enum):
+    awkword = 879863881349087252
+    betrayal = 773336526917861400
+    cg2_qa = 832012815819604009
+    cg2_staging = 832012730599735326
+    cg3_dev = 832012682520428625
+    cg3_prod = 832013003968348200
+    cg3_qa = 832012894068801636
+    cg3_staging = 832012938398400562
+    cg4_dev = 832013108234289153
+    cg4_prod = 832025144389533716
+    cg4_qa = 832025114077298718
+    cg4_staging = 832025061657280566
+    chess_in_the_park_dev = 832012586023256104
+    chess_in_the_park = 832012774040141894
+    decoders_dev = 891001866073296967
+    doodle_crew = 878067389634314250
+    doodle_crew_dev = 878067427668275241
+    fishington = 814288819477020702
+    letter_tile = 879863686565621790
+    pn_staging = 763116274876022855
+    poker_night = 755827207812677713
+    poker_qa = 801133024841957428
+    putts = 832012854282158180
+    sketchy_artist = 879864070101172255
+    sketchy_artist_dev = 879864104980979792
+    spell_cast = 852509694341283871
+    watch_together = 880218394199220334
+    watch_together_dev = 880218832743055411
+    word_snacks = 879863976006127627
+    word_snacks_dev = 879864010126786570
+    youtube_together = 755600276941176913
+
+
+T = TypeVar("T")
+
+
+def create_unknown_value(cls: Type[T], val: Any) -> T:
+    value_cls = cls._enum_value_cls_  # type: ignore
+    name = f"unknown_{val}"
+    return value_cls(name=name, value=val)
+
+
+def try_enum(cls: Type[T], val: Any) -> T:
+    """A function that tries to turn the value into enum ``cls``.
+
+    If it fails it returns a proxy invalid value instead.
+    """
+
+    try:
+        return cls._enum_value_map_[val]  # type: ignore
+    except (KeyError, TypeError, AttributeError):
+        return create_unknown_value(cls, val)
+>>>>>>> Stashed changes

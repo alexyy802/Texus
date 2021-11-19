@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -29,7 +31,8 @@ from .permissions import Permissions
 from .errors import InvalidArgument
 from .colour import Colour
 from .mixins import Hashable
-from .utils import snowflake_time, _get_as_snowflake, MISSING
+from .utils import snowflake_time, _get_as_snowflake, MISSING, _bytes_to_base64_data
+from .asset import Asset
 
 __all__ = (
     "RoleTags",
@@ -172,6 +175,11 @@ class Role(Hashable):
         Indicates if the role can be mentioned by users.
     tags: Optional[:class:`RoleTags`]
         The role tags associated with this role.
+    unicode_emoji: Optional[:class:`str`]
+        The role's unicode emoji.
+        Only available to guilds that contain ``ROLE_ICONS`` in :attr:`Guild.features`.
+
+        .. versionadded:: 2.0
     """
 
     __slots__ = (
@@ -185,6 +193,8 @@ class Role(Hashable):
         "hoist",
         "guild",
         "tags",
+        "unicode_emoji",
+        "_icon",
         "_state",
     )
 
@@ -244,6 +254,8 @@ class Role(Hashable):
         self.hoist: bool = data.get("hoist", False)
         self.managed: bool = data.get("managed", False)
         self.mentionable: bool = data.get("mentionable", False)
+        self._icon: Optional[str] = data.get("icon")
+        self.unicode_emoji: Optional[str] = data.get("unicode_emoji")
         self.tags: Optional[RoleTags]
 
         try:
@@ -323,6 +335,17 @@ class Role(Hashable):
         role_id = self.id
         return [member for member in all_members if member._roles.has(role_id)]
 
+    @property
+    def icon(self) -> Optional[Asset]:
+        """Optional[:class:`Asset`]: Returns the role's icon asset, if available.
+
+        .. versionadded:: 2.0
+        """
+        if self._icon is None:
+            return None
+
+        return Asset._from_icon(self._state, self.id, self._icon, "role")
+
     async def _move(self, position: int, reason: Optional[str]) -> None:
         if position <= 0:
             raise InvalidArgument("Cannot move role to position 0 or below")
@@ -365,6 +388,8 @@ class Role(Hashable):
         mentionable: bool = MISSING,
         position: int = MISSING,
         reason: Optional[str] = MISSING,
+        icon: Optional[bytes] = MISSING,
+        unicode_emoji: str = MISSING,
     ) -> Optional[Role]:
         """|coro|
 
@@ -379,7 +404,7 @@ class Role(Hashable):
             Can now pass ``int`` to ``colour`` keyword-only parameter.
 
         .. versionchanged:: 2.0
-            Edits are no longer in-place, the newly edited role is returned instead.
+            Edits are no longer in-place, the newly edited role is returned instead. Added ``icon`` and ``unicode_emoji``.
 
         Parameters
         -----------
@@ -398,6 +423,13 @@ class Role(Hashable):
             position or it will fail.
         reason: Optional[:class:`str`]
             The reason for editing this role. Shows up on the audit log.
+        icon: Optional[:class:`bytes`]
+            A :term:`py:bytes-like object` representing the icon. Only PNG/JPEG/WebP is supported.
+            Only available to guilds that contain ``ROLE_ICONS`` in :attr:`Guild.features`.
+            Could be ``None`` to denote removal of the icon.
+        unicode_emoji: Optional[:class:`str`]
+            The role's unicode emoji. If this argument is passed, ``icon`` is set to None.
+            Only available to guilds that contain ``ROLE_ICONS`` in :attr:`Guild.features`.
 
         Raises
         -------
@@ -438,6 +470,16 @@ class Role(Hashable):
 
         if mentionable is not MISSING:
             payload["mentionable"] = mentionable
+
+        if icon is not MISSING:
+            if icon is None:
+                payload["icon"] = None
+            else:
+                payload["icon"] = _bytes_to_base64_data(icon)
+
+        if unicode_emoji is not MISSING:
+            payload["unicode_emoji"] = unicode_emoji
+            payload["icon"] = None
 
         data = await self._state.http.edit_role(
             self.guild.id, self.id, reason=reason, **payload

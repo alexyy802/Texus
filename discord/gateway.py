@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -399,8 +401,8 @@ class DiscordWebSocket:
                 "token": self.token,
                 "properties": {
                     "$os": sys.platform,
-                    "$browser": "texus",
-                    "$device": "texus",
+                    "$browser": "discord.py",
+                    "$device": "discord.py",
                     "$referrer": "",
                     "$referring_domain": "",
                 },

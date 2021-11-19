@@ -1,7 +1,9 @@
 """
 The MIT License (MIT)
 
-Copyright (c) 2015-present Rapptz
+Copyright (c) 2015-2021 Rapptz
+Copyright (c) 2021-2021 Pycord Development
+Copyright (c) 2021-present Texus
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -405,7 +407,7 @@ class Client:
     ) -> asyncio.Task:
         wrapped = self._run_event(coro, event_name, *args, **kwargs)
         # Schedules the task
-        return asyncio.create_task(wrapped, name=f"texus: {event_name}")
+        return asyncio.create_task(wrapped, name=f"discord.py: {event_name}")
 
     def dispatch(self, event: str, *args: Any, **kwargs: Any) -> None:
         _log.debug("Dispatching event %s", event)
@@ -509,6 +511,8 @@ class Client:
 
         Raises
         ------
+        TypeError
+            The token was in invalid type.
         :exc:`.LoginFailure`
             The wrong credentials are passed.
         :exc:`.HTTPException`
@@ -516,6 +520,10 @@ class Client:
             usually when it isn't 200 or the known incorrect credentials
             passing status code.
         """
+        if not isinstance(token, str):
+            raise TypeError(
+                f"token must be of type str, not {token.__class__.__name__}"
+            )
 
         _log.info("logging in using static token")
 
@@ -1261,7 +1269,7 @@ class Client:
         data = await self.http.get_template(code)
         return Template(data=data, state=self._connection)  # type: ignore
 
-    async def fetch_guild(self, guild_id: int, /) -> Guild:
+    async def fetch_guild(self, guild_id: int, /, *, with_counts=True) -> Guild:
         """|coro|
 
         Retrieves a :class:`.Guild` from an ID.
@@ -1280,6 +1288,12 @@ class Client:
         guild_id: :class:`int`
             The guild's ID to fetch from.
 
+        with_counts: :class:`bool`
+            Whether to include count information in the guild. This fills the
+            :attr:`.Guild.approximate_member_count` and :attr:`.Guild.approximate_presence_count`
+            fields.
+
+            .. versionadded:: 2.0
         Raises
         ------
         :exc:`.Forbidden`
@@ -1292,7 +1306,7 @@ class Client:
         :class:`.Guild`
             The guild from the ID.
         """
-        data = await self.http.get_guild(guild_id)
+        data = await self.http.get_guild(guild_id, with_counts=with_counts)
         return Guild(data=data, state=self._connection)
 
     async def create_guild(
