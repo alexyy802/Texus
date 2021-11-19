@@ -300,13 +300,10 @@ class InteractionResponded(ClientException):
         self.interaction: Interaction = interaction
         super().__init__("This interaction has already been responded to before")
 
-<<<<<<< Updated upstream
-
 class ValidationError(DiscordException):
     """An Exception that is raised when there is a Validation Error."""
 
     pass
-=======
 
 class ExtensionError(DiscordException):
     """Base exception for extension related errors.
@@ -396,4 +393,3 @@ class ExtensionNotFound(ExtensionError):
     def __init__(self, name: str) -> None:
         msg = f"Extension {name!r} could not be found."
         super().__init__(msg, name=name)
->>>>>>> Stashed changes
