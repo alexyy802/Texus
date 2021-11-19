@@ -14,7 +14,7 @@ texus
    :target: https://pypi.python.org/pypi/texus
    :alt: PyPI downloads
 
-A fork of texus. texus is a modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
+A fork of discord.py. texus is a modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
 
 Key Features
 -------------
