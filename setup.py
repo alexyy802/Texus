@@ -64,6 +64,7 @@ packages = [
     "discord.webhook",
     "discord.ext.commands",
     "discord.ext.tasks",
+    "discord.application",
 ]
 
 setup(
