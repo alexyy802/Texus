@@ -95,7 +95,7 @@ Quick Example
     bot.run("token")
 
 Normal Commands Example
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: py
 
