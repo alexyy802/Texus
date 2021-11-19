@@ -121,6 +121,8 @@ class ApplicationContext(discord.abc.Messageable):
             if self.response.is_done()
             else self.interaction.response.send_message
         )
+    
+    send = respond
 
     @property
     def defer(self):
