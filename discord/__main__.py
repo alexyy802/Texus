@@ -356,7 +356,7 @@ def add_newcog_args(subparser: argparse._SubParsersAction) -> None:
 
 def parse_args() -> Tuple[argparse.ArgumentParser, argparse.Namespace]:
     parser = argparse.ArgumentParser(
-        prog="discord", description="Tools for helping with discord.py"
+        prog="discord", description="Tools for helping with texus"
     )
     parser.add_argument(
         "-v", "--version", action="store_true", help="shows the library version"
