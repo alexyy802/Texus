@@ -293,7 +293,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'texus.tex', 'texus Documentation',
-   'Rapptz', 'manual'),
+   'TexusDeV', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
