@@ -300,10 +300,12 @@ class InteractionResponded(ClientException):
         self.interaction: Interaction = interaction
         super().__init__("This interaction has already been responded to before")
 
+
 class ValidationError(DiscordException):
     """An Exception that is raised when there is a Validation Error."""
 
     pass
+
 
 class ExtensionError(DiscordException):
     """Base exception for extension related errors.

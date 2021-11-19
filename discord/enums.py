@@ -634,6 +634,7 @@ class NSFWLevel(Enum, comparable=True):
     safe = 2
     age_restricted = 3
 
+
 T = TypeVar("T")
 
 
