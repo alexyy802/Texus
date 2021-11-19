@@ -1,8 +1,8 @@
 Texus
 ======
 
-.. image:: https://discord.com/api/guilds/910843156231249990/embed.png
-   :target: https://discord.gg/54f7UWNsAJ
+.. image:: https://discord.com/api/guilds/853602966379560980/embed.png
+   :target: https://discord.gg/pEmrd7J448
    :alt: Discord server invite
 .. image:: https://img.shields.io/pypi/v/texus.svg
    :target: https://pypi.python.org/pypi/texus
@@ -25,7 +25,7 @@ Installing
 
 **Python 3.8 or higher is required**
 
-Before installing the library you need to uninstall discord.py or any other fork you use before changing to Texus.
+Before installing the library you need to uninstall texus or any other fork you use before changing to Texus.
 
 To install the library without full voice support, you can just run the following command:
 

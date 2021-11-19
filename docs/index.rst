@@ -9,7 +9,7 @@ Welcome to texus
 .. image:: /images/snake.svg
 .. image:: /images/snake_dark.svg
 
-discord.py is a modern, easy to use, feature-rich, and async ready API wrapper
+texus is a modern, easy to use, feature-rich, and async ready API wrapper
 for Discord.
 
 **Features:**
