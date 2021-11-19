@@ -1,4 +1,6 @@
-""""""
+"""
+Errors For Applications
+"""
 
 from ..errors import DiscordException
 
