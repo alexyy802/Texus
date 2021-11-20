@@ -11,5 +11,5 @@
 ## Reporting a Vulnerability
 
 If you find a vulnerability you have two ways to report it:
-- Write us on https://texus.dev/discord
+- Write us on https://discord.gg/N5wgvRunMT
 - Open an [issue](https://github.com/TexusDev/texus/issues/new/choose)
