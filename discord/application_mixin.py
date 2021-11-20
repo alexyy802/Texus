@@ -19,8 +19,6 @@ from typing import (
 
 import sys
 
-from .client import Client
-from .shard import AutoShardedClient
 from .utils import MISSING, get, find, async_all
 from .application_context import (
     SlashCommand,
