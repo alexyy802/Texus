@@ -3,9 +3,9 @@
 ``discord.ext.audio`` -- Advanced Audio And Music Playing Extension
 =====================================================================
 
-.. autofunction:: enable_debug_logging
+.. autofunction:: discord.ext.audio.enable_debug_logging
 
-.. autofunction:: add_event_hook
+.. autofunction:: discord.ext.audio.add_event_hook
 
 Client
 ------
@@ -14,78 +14,78 @@ Client
 
 Events
 ------
-All Events are derived from :class:`Event`
+All Events are derived from :class:`discord.ext.audio.Event`
 
 .. autoclass:: discord.ext.audio.Event
     :members:
 
-.. autoclass:: TrackStartEvent
+.. autoclass:: discord.ext.audio.TrackStartEvent
     :members:
 
-.. autoclass:: TrackEndEvent
+.. autoclass:: discord.ext.audio.TrackEndEvent
     :members:
 
-.. autoclass:: TrackStuckEvent
+.. autoclass:: discord.ext.audio.TrackStuckEvent
     :members:
 
-.. autoclass:: TrackExceptionEvent
+.. autoclass:: discord.ext.audio.TrackExceptionEvent
     :members:
 
-.. autoclass:: QueueEndEvent
+.. autoclass:: discord.ext.audio.QueueEndEvent
     :members:
 
-.. autoclass:: NodeConnectedEvent
+.. autoclass:: discord.ext.audioNodeConnectedEvent
     :members:
 
-.. autoclass:: NodeChangedEvent
+.. autoclass:: discord.ext.audio.NodeChangedEvent
     :members:
 
-.. autoclass:: NodeDisconnectedEvent
+.. autoclass:: discord.ext.audio.NodeDisconnectedEvent
     :members:
 
-.. autoclass:: WebSocketClosedEvent
+.. autoclass:: discord.ext.audio.WebSocketClosedEvent
     :members:
 
 Models
 ------
-**All** custom players must derive from :class:`BasePlayer`
+**All** custom players must derive from :class:`discord.ext.audio.BasePlayer`
 
-.. autoclass:: AudioTrack
+.. autoclass:: discord.ext.audio.AudioTrack
     :members:
 
-.. autoclass:: BasePlayer
+.. autoclass:: discord.ext.audioBasePlayer
     :members:
 
-.. autoclass:: DefaultPlayer
+.. autoclass:: discord.ext.audio.DefaultPlayer
     :members:
 
 Node
 ----
-.. autoclass:: Node
+.. autoclass:: discord.ext.audio.Node
     :members:
 
 Node Manager
 ------------
-.. autoclass:: NodeManager
+.. autoclass:: discord.ext.audio.NodeManager
     :members:
 
 Player Manager
 --------------
-.. autoclass:: PlayerManager
+.. autoclass:: discord.ext.audio.PlayerManager
     :members:
 
 Stats
 -----
-.. autoclass:: Stats
+.. autoclass:: discord.ext.audio.Stats
     :members:
 
-.. autoclass:: Penalty
+.. autoclass:: discord.ext.audio.Penalty
     :members:
 
 Utilities
 ---------
-.. autofunction:: format_time
+.. autofunction:: discord.ext.audio.format_time
 
-.. autofunction:: parse_time
+.. autofunction:: discord.ext.audio.parse_time
 
-.. autofunction:: decode_track
+.. autofunction:: discord.ext.audio.decode_track
