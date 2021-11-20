@@ -30,7 +30,7 @@ from ...cog import Cog
 
 from typing import Any, Callable, Generator, TYPE_CHECKING, TypeVar, Type
 
-from ...commands import ApplicationCommand
+from ...application import ApplicationCommand
 
 if TYPE_CHECKING:
     from .core import Command

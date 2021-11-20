@@ -60,7 +60,7 @@ from .cooldowns import (
     DynamicCooldownMapping,
 )
 from .converter import run_converters, get_converter, Greedy
-from ...commands import _BaseCommand, slash_command, user_command, message_command
+from ...application import _BaseCommand, slash_command, user_command, message_command
 from .cog import Cog
 from .context import Context
 
