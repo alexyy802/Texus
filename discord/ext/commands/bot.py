@@ -959,11 +959,11 @@ class BotBase(GroupMixin):
         await self.process_commands(message)
 
 
-class Bot(BotBase, discord.Bot):
+class Bot(BotBase, discord.Client):
     """Represents a discord bot.
 
-    This class is a subclass of :class:`discord.Bot` and as a result
-    anything that you can do with a :class:`discord.Bot` you can do with
+    This class is a subclass of :class:`discord.Client` and as a result
+    anything that you can do with a :class:`discord.Client` you can do with
     this bot.
 
     This class also subclasses :class:`.GroupMixin` to provide the functionality
