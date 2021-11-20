@@ -62,11 +62,11 @@ from .interactions import *
 from .components import *
 from .threads import *
 from .bot import *
-from .commands import *
 from .cog import Cog
 from .welcome_screen import *
 from .console import *
-
+from .application_commands import *
+from .application_context import *
 
 class VersionInfo(NamedTuple):
     major: int

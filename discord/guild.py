@@ -823,6 +823,16 @@ class Guild(Hashable):
         """List[:class:`Member`]: A list of members that belong to this guild."""
         return list(self._members.values())
 
+    @property
+    def bots(self) -> List[Member]:
+        """List[:class:`Member`]: A list of bots that belong to this guild"""
+        return [bots for bots in self.members if bots.bot]
+
+    @property
+    def humans(self) -> List[Member]:
+        """List[:class:`Member`]: A list of humans that belong to this guild"""
+        return [bots for bots in self.members if not bots.bot]
+
     def get_member(self, user_id: int, /) -> Optional[Member]:
         """Returns a member with the given ID.
 

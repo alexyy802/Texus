@@ -1,36 +1,10 @@
-"""
-The MIT License (MIT)
-
-Copyright (c) 2015-2021 Rapptz
-Copyright (c) 2021-2021 Pycord Development
-Copyright (c) 2021-present Texus
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-"""
-
 from __future__ import annotations
 
 import asyncio
 import collections
 import inspect
 import traceback
-from .commands.errors import CheckFailure
+from .errors import CheckFailure
 
 from typing import (
     Any,
@@ -48,7 +22,7 @@ import sys
 from .client import Client
 from .shard import AutoShardedClient
 from .utils import MISSING, get, find, async_all
-from .commands import (
+from .application_context import (
     SlashCommand,
     SlashCommandGroup,
     MessageCommand,
@@ -56,7 +30,7 @@ from .commands import (
     ApplicationCommand,
     ApplicationContext,
     AutocompleteContext,
-    command,
+    application_command,
 )
 from .cog import CogMixin
 
@@ -68,11 +42,9 @@ CoroFunc = Callable[..., Coroutine[Any, Any, Any]]
 CFT = TypeVar("CFT", bound=CoroFunc)
 
 __all__ = (
-    "ApplicationCommandMixin",
-    "Bot",
-    "AutoShardedBot",
+    'ApplicationCommandMixin',
+    'BotBase'
 )
-
 
 class ApplicationCommandMixin:
     """A mixin that implements common functionality for classes that need
@@ -515,7 +487,7 @@ class ApplicationCommandMixin:
 
         def decorator(func) -> ApplicationCommand:
             kwargs.setdefault("parent", self)
-            result = command(**kwargs)(func)
+            result = application_command(**kwargs)(func)
             self.add_application_command(result)
             return result
 
@@ -605,7 +577,6 @@ class ApplicationCommandMixin:
         if cls is None:
             cls = AutocompleteContext
         return cls(self, interaction)
-
 
 class BotBase(ApplicationCommandMixin, CogMixin):
     _supports_prefixed_commands = False
@@ -957,57 +928,3 @@ class BotBase(ApplicationCommandMixin, CogMixin):
 
         self._after_invoke = coro
         return coro
-
-
-class Bot(BotBase, Client):
-    """Represents a discord bot.
-
-    This class is a subclass of :class:`discord.Client` and as a result
-    anything that you can do with a :class:`discord.Client` you can do with
-    this bot.
-
-    This class also subclasses :class:`.ApplicationCommandMixin` to provide the functionality
-    to manage commands.
-
-    .. versionadded:: 2.0
-
-    Attributes
-    -----------
-    description: :class:`str`
-        The content prefixed into the default help message.
-    owner_id: Optional[:class:`int`]
-        The user ID that owns the bot. If this is not set and is then queried via
-        :meth:`.is_owner` then it is fetched automatically using
-        :meth:`~.Bot.application_info`.
-    owner_ids: Optional[Collection[:class:`int`]]
-        The user IDs that owns the bot. This is similar to :attr:`owner_id`.
-        If this is not set and the application is team based, then it is
-        fetched automatically using :meth:`~.Bot.application_info`.
-        For performance reasons it is recommended to use a :class:`set`
-        for the collection. You cannot set both ``owner_id`` and ``owner_ids``.
-
-        .. versionadded:: 1.3
-    debug_guild: Optional[:class:`int`]
-        Guild ID of a guild to use for testing commands. Prevents setting global commands
-        in favor of guild commands, which update instantly.
-        .. note::
-
-            The bot will not create any global commands if a debug_guild is passed.
-    debug_guilds: Optional[List[:class:`int`]]
-        Guild IDs of guilds to use for testing commands. This is similar to debug_guild.
-        .. note::
-
-            You cannot set both debug_guild and debug_guilds.
-    """
-
-    pass
-
-
-class AutoShardedBot(BotBase, AutoShardedClient):
-    """This is similar to :class:`.Bot` except that it is inherited from
-    :class:`discord.AutoShardedClient` instead.
-
-    .. versionadded:: 2.0
-    """
-
-    pass
