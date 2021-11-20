@@ -1,7 +1,7 @@
 .. currentmodule:: discord
 
-discord.ext.audio
-=============
+``discord.ext.audio`` -- Advanced Audio And Music Playing Extension
+=====================================================================
 
 .. autofunction:: enable_debug_logging
 
