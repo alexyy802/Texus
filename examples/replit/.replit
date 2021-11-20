@@ -1,0 +1,7 @@
+language="python3" 
+run = """
+python main.py #You can change main.py into something else just make sure its the main file
+"""
+
+[packager]
+ignoredPackages=["discord.py", "discord"] #Ignore the discord.py library
