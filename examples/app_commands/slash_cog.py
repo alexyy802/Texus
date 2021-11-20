@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord.commands import (
+from discord.application import (
     slash_command,
 )  # Importing the decorator that makes slash commands.
 
