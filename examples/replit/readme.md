@@ -9,7 +9,7 @@ Before installing Texus you need to uninstall forks such as `pycord, nextcord, e
 Steps to install the latest version of texus:
 
 1. Head to console and type the following command `pip install texus`
-2. Remove any type of discord.py fork or discord.py itself by doing `pip unsintall <package name>`
+2. Remove any type of discord.py fork or discord.py itself by doing `pip uninstall <package name>`
 3. Make a file called `.replit` and inside the file you need to paste [this code](https://github.com/TexusDev/Texus/blob/master/examples/replit/.replit)
 4. If you are using nextcord you need to change everything from nextcord into discord in order to use texus.
 5. You should be good to go after following the Steps if any questions feel free to join our [support server](https://discord.gg/54f7UWNsAJ)
