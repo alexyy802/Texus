@@ -61,7 +61,6 @@ from .stage_instance import *
 from .interactions import *
 from .components import *
 from .threads import *
-from .bot import *
 from .cog import Cog
 from .welcome_screen import *
 from .console import *
