@@ -72,7 +72,7 @@ packages = [
     "discord.commands",
     "discord.ext.commands",
     "discord.ext.tasks",
-    "discord.commands",
+    "discord.application",
     "discord.ext.audio",
     "discord.ext.audio.dl",
     "discord.ext.dl",
