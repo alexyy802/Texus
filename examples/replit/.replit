@@ -1,6 +1,6 @@
 language="python3" 
 run = """
-python main.py #You can change main.py into something else just make sure its the main file
+python main.py # You can change main.py into something else just make sure its the main file
 """
 
 [packager]
