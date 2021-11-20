@@ -2,7 +2,7 @@ texus
 ==========
 
 .. image:: https://discord.com/api/guilds/910843156231249990/embed.png
-   :target: https://texus.dev/discord
+   :target: https://discord.gg/54f7UWNsAJ
    :alt: Discord server invite
 .. image:: https://img.shields.io/pypi/v/texus.svg
    :target: https://pypi.python.org/pypi/texus
@@ -118,6 +118,6 @@ Links
 ------
 
 - `Documentation <https://docs.texus.dev/en/master/index.html>`_
-- `Official Discord Server <https://texus.dev/discord>`_
+- `Official Discord Server <https://discord.gg/54f7UWNsAJ>`_
 - `Discord Developers <https://discord.gg/discord-developers>`_
 - `Discord API <https://discord.gg/discord-api>`_

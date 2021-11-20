@@ -8,7 +8,7 @@ The following is a set of guidelines for contributing to the repository. These a
 
 Generally speaking questions are better suited in our resources below.
 
-- The official support server: https://discord.gg/UCXwPR7Pew
+- The official support server: https://discord.gg/N5wgvRunMT
 - The Discord API server under #python_texus: https://discord.gg/discord-api
 - [The FAQ in the documentation](https://texus.readthedocs.io/en/latest/faq.html)
 - [StackOverflow's `texus` tag](https://stackoverflow.com/questions/tagged/texus)
