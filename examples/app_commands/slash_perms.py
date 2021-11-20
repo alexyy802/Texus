@@ -1,7 +1,7 @@
 import discord
 
 # Imports permissions from discord.commands
-from discord.commands import permissions
+from discord.application import permissions
 
 bot = discord.Bot()
 
