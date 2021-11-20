@@ -1,6 +1,6 @@
 .. currentmodule:: discord
 
-Documentation
+discord.ext.audio
 =============
 
 .. autofunction:: enable_debug_logging
