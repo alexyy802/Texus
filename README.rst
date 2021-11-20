@@ -23,6 +23,7 @@ Key Features
 - Proper rate limit handling.
 - Optimised for both speed and memory usage.
 - Supports Slash Commands, Context Menus and Message Components.
+- Extension For Advanced Audio And Music Playing
 
 Installing
 ----------
