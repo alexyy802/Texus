@@ -6,7 +6,7 @@ The site is integrated with GitHub, a code-hosting platform, providing a way to 
 # Installing
 Before installing Texus you need to uninstall forks such as `pycord, nextcord, etc.` or it will interfere with the library installation and usage
 
-Steps to install the latest version of texus :
+Steps to install the latest version of texus:
 
 1. Head to console and type the following command `pip install texus`
 2. Remove any type of discord.py fork or discord.py itself by doing `pip unsintall <package name>`
