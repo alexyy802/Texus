@@ -58,6 +58,9 @@ extras_require = {
     ],
     "speed": [
         "orjson>=3.5.4",
+        "aiodns>=1.1",
+        "Brotli",
+        "cchardet",
     ],
 }
 
@@ -70,6 +73,12 @@ packages = [
     "discord.ext.commands",
     "discord.ext.tasks",
     "discord.commands",
+    "discord.ext.audio",
+    "discord.ext.audio.dl",
+    "discord.ext.dl",
+    'discord.ext.dl.extractor', 
+    'discord.ext.dl.downloader',
+    'discord.ext.dl.postprocessor',
 ]
 
 setup(
