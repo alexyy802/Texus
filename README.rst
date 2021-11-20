@@ -35,33 +35,33 @@ To install the library without full voice support, you can just run the followin
 .. code:: sh
 
     # Linux/macOS
-    python3 -m pip install -U texus
+    python3 -m pip install -U pep3003
 
     # Windows
-    py -3 -m pip install -U texus
+    py -3 -m pip install -U pep3003
 
 Otherwise to get voice support you should run the following command:
 
 .. code:: sh
 
     # Linux/macOS
-    python3 -m pip install -U "texus[voice]"
+    python3 -m pip install -U "pep3003[voice]"
 
     # Windows
-    py -3 -m pip install -U texus[voice]
+    py -3 -m pip install -U pep3003[voice]
 
 To get our speed version With aiohttp speedup run the following command:
 
 .. code:: sh
    
-   pip install texus[speed]
+   pip install pep3003[speed]
 
 To install the development version, do the following:
 
 .. code:: sh
 
-    $ git clone https://github.com/TexusDev/texus
-    $ cd texus
+    $ git clone https://github.com/pep3003/pep3003
+    $ cd pep3003
     $ python3 -m pip install -U .[voice]
 
 
