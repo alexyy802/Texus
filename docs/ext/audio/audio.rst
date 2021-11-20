@@ -34,7 +34,7 @@ All Events are derived from :class:`discord.ext.audio.Event`
 .. autoclass:: discord.ext.audio.QueueEndEvent
     :members:
 
-.. autoclass:: discord.ext.audioNodeConnectedEvent
+.. autoclass:: discord.ext.audio.NodeConnectedEvent
     :members:
 
 .. autoclass:: discord.ext.audio.NodeChangedEvent
