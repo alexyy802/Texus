@@ -29,7 +29,7 @@ import sys
 import discord.utils
 import types
 from . import errors
-from .commands import SlashCommand, UserCommand, MessageCommand, ApplicationCommand
+from .application import SlashCommand, UserCommand, MessageCommand, ApplicationCommand
 
 from typing import (
     Any,
@@ -46,10 +46,10 @@ from typing import (
     Type,
 )
 
-from .commands.commands import _BaseCommand
+from .application.commands import _BaseCommand
 
 if TYPE_CHECKING:
-    from .commands import ApplicationContext, ApplicationCommand
+    from .application import ApplicationContext, ApplicationCommand
 
 __all__ = ("CogMeta", "Cog", "CogMixin")
 

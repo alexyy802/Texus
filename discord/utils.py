@@ -133,7 +133,7 @@ if TYPE_CHECKING:
     from .abc import Snowflake
     from .invite import Invite
     from .template import Template
-    from .commands.context import AutocompleteContext
+    from .application.context import AutocompleteContext
     from .interactions import Interaction
 
     class _RequestLike(Protocol):

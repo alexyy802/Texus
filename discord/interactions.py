@@ -74,7 +74,7 @@ if TYPE_CHECKING:
         PartialMessageable,
     )
     from .threads import Thread
-    from .commands import OptionChoice
+    from .application import OptionChoice
 
     InteractionChannel = Union[
         VoiceChannel,
