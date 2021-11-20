@@ -1,5 +1,6 @@
-language="python3" 
+language="python3"
 run = """
+pip install -U texus #Install the package
 python main.py # You can change main.py into something else just make sure its the main file
 """
 
