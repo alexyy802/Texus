@@ -4,7 +4,7 @@ including capability for real-time, multi-user editing with a live chat feed. It
 The site is integrated with GitHub, a code-hosting platform, providing a way to import and run projects from GitHub Users can also import projects from Glitch, which provides a similar service to Replit.
 
 # Installing
-Before installing Texus you are needed to uninstall forks such as `pycord, nextcord, etc.` or it will interfere with the library installation and usage
+Before installing Texus you need to uninstall forks such as `pycord, nextcord, etc.` or it will interfere with the library installation and usage
 
 Steps to install the latest version of texus :
 
