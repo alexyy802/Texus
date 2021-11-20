@@ -16,7 +16,7 @@ Events
 ------
 All Events are derived from :class:`Event`
 
-.. autoclass:: Event
+.. autoclass:: discord.ext.audio.Event
     :members:
 
 .. autoclass:: TrackStartEvent
