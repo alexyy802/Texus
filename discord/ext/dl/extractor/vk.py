@@ -445,14 +445,17 @@ class VKIE(VKBaseIE):
         if is_live:
             title = self._live_title(title)
 
-        timestamp = unified_timestamp(
-            self._html_search_regex(
-                r'class=["\']mv_info_date[^>]+>([^<]+)(?:<|from)',
-                info_page,
-                "upload date",
-                default=None,
+        timestamp = (
+            unified_timestamp(
+                self._html_search_regex(
+                    r'class=["\']mv_info_date[^>]+>([^<]+)(?:<|from)',
+                    info_page,
+                    "upload date",
+                    default=None,
+                )
             )
-        ) or int_or_none(data.get("date"))
+            or int_or_none(data.get("date"))
+        )
 
         view_count = str_to_int(
             self._search_regex(

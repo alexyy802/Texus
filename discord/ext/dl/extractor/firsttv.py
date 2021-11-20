@@ -178,20 +178,28 @@ class FirstTVIE(InfoExtractor):
                 }
             )
 
-        title = self._html_search_regex(
-            (
-                r'<div class="tv_translation">\s*<h1><a href="[^"]+">([^<]*)</a>',
-                r"'title'\s*:\s*'([^']+)'",
-            ),
-            webpage,
-            "title",
-            default=None,
-        ) or self._og_search_title(webpage, default=None)
-        description = self._html_search_regex(
-            r'<div class="descr">\s*<div>&nbsp;</div>\s*<p>([^<]*)</p></div>',
-            webpage,
-            "description",
-            default=None,
-        ) or self._html_search_meta("description", webpage, "description", default=None)
+        title = (
+            self._html_search_regex(
+                (
+                    r'<div class="tv_translation">\s*<h1><a href="[^"]+">([^<]*)</a>',
+                    r"'title'\s*:\s*'([^']+)'",
+                ),
+                webpage,
+                "title",
+                default=None,
+            )
+            or self._og_search_title(webpage, default=None)
+        )
+        description = (
+            self._html_search_regex(
+                r'<div class="descr">\s*<div>&nbsp;</div>\s*<p>([^<]*)</p></div>',
+                webpage,
+                "description",
+                default=None,
+            )
+            or self._html_search_meta(
+                "description", webpage, "description", default=None
+            )
+        )
 
         return self.playlist_result(entries, display_id, title, description)

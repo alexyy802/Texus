@@ -102,16 +102,13 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
 
         if not cfg_url:
             inputs = self._hidden_inputs(webpage)
-            cfg_url = (
-                "https://cdn-fck.%sflix.com/%sflix/%s%s.fid?key=%s&VID=%s&premium=1&vip=1&alpha"
-                % (
-                    self._HOST,
-                    self._HOST,
-                    inputs["vkey"],
-                    self._VKEY_SUFFIX,
-                    inputs["nkey"],
-                    video_id,
-                )
+            cfg_url = "https://cdn-fck.%sflix.com/%sflix/%s%s.fid?key=%s&VID=%s&premium=1&vip=1&alpha" % (
+                self._HOST,
+                self._HOST,
+                inputs["vkey"],
+                self._VKEY_SUFFIX,
+                inputs["nkey"],
+                video_id,
             )
 
         cfg_xml = self._download_xml(

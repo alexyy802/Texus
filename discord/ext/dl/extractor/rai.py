@@ -562,13 +562,16 @@ class RaiIE(RaiBaseIE):
         )
         self._sort_formats(relinker_info["formats"])
 
-        title = self._search_regex(
-            r'var\s+videoTitolo\s*=\s*([\'"])(?P<title>[^\'"]+)\1',
-            webpage,
-            "title",
-            group="title",
-            default=None,
-        ) or self._og_search_title(webpage)
+        title = (
+            self._search_regex(
+                r'var\s+videoTitolo\s*=\s*([\'"])(?P<title>[^\'"]+)\1',
+                webpage,
+                "title",
+                group="title",
+                default=None,
+            )
+            or self._og_search_title(webpage)
+        )
 
         info = {
             "id": video_id,

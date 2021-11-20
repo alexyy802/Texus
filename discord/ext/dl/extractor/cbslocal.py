@@ -115,14 +115,17 @@ class CBSLocalArticleIE(AnvatoIE):
 
         info_dict = self._extract_anvato_videos(webpage, display_id)
 
-        timestamp = unified_timestamp(
-            self._html_search_regex(
-                r'class="(?:entry|post)-date"[^>]*>([^<]+)',
-                webpage,
-                "released date",
-                default=None,
+        timestamp = (
+            unified_timestamp(
+                self._html_search_regex(
+                    r'class="(?:entry|post)-date"[^>]*>([^<]+)',
+                    webpage,
+                    "released date",
+                    default=None,
+                )
             )
-        ) or parse_iso8601(self._html_search_meta("uploadDate", webpage))
+            or parse_iso8601(self._html_search_meta("uploadDate", webpage))
+        )
 
         info_dict.update(
             {

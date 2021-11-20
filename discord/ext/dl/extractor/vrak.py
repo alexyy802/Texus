@@ -41,12 +41,15 @@ class VrakIE(InfoExtractor):
 
         webpage = self._download_webpage(url, video_id)
 
-        title = self._html_search_regex(
-            r'<h\d\b[^>]+\bclass=["\']videoTitle["\'][^>]*>([^<]+)',
-            webpage,
-            "title",
-            default=None,
-        ) or self._og_search_title(webpage)
+        title = (
+            self._html_search_regex(
+                r'<h\d\b[^>]+\bclass=["\']videoTitle["\'][^>]*>([^<]+)',
+                webpage,
+                "title",
+                default=None,
+            )
+            or self._og_search_title(webpage)
+        )
 
         content = self._parse_json(
             self._search_regex(

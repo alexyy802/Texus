@@ -318,12 +318,15 @@ class TagesschauIE(InfoExtractor):
 
         webpage = self._download_webpage(url, display_id)
 
-        title = self._html_search_regex(
-            r'<span[^>]*class="headline"[^>]*>(.+?)</span>',
-            webpage,
-            "title",
-            default=None,
-        ) or self._og_search_title(webpage)
+        title = (
+            self._html_search_regex(
+                r'<span[^>]*class="headline"[^>]*>(.+?)</span>',
+                webpage,
+                "title",
+                default=None,
+            )
+            or self._og_search_title(webpage)
+        )
 
         DOWNLOAD_REGEX = r'(?s)<p>Wir bieten dieses (?P<kind>Video|Audio) in folgenden Formaten zum Download an:</p>\s*<div class="controls">(?P<links>.*?)</div>\s*<p>'
 

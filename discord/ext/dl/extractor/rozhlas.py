@@ -34,12 +34,15 @@ class RozhlasIE(InfoExtractor):
             "http://prehravac.rozhlas.cz/audio/%s" % audio_id, audio_id
         )
 
-        title = self._html_search_regex(
-            r'<h3>(.+?)</h3>\s*<p[^>]*>.*?</p>\s*<div[^>]+id=["\']player-track',
-            webpage,
-            "title",
-            default=None,
-        ) or remove_start(self._og_search_title(webpage), "Radio Wave - ")
+        title = (
+            self._html_search_regex(
+                r'<h3>(.+?)</h3>\s*<p[^>]*>.*?</p>\s*<div[^>]+id=["\']player-track',
+                webpage,
+                "title",
+                default=None,
+            )
+            or remove_start(self._og_search_title(webpage), "Radio Wave - ")
+        )
         description = self._html_search_regex(
             r'<p[^>]+title=(["\'])(?P<url>(?:(?!\1).)+)\1[^>]*>.*?</p>\s*<div[^>]+id=["\']player-track',
             webpage,

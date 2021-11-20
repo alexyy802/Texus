@@ -76,9 +76,9 @@ packages = [
     "discord.ext.audio",
     "discord.ext.audio.dl",
     "discord.ext.dl",
-    'discord.ext.dl.extractor', 
-    'discord.ext.dl.downloader',
-    'discord.ext.dl.postprocessor',
+    "discord.ext.dl.extractor",
+    "discord.ext.dl.downloader",
+    "discord.ext.dl.postprocessor",
 ]
 
 setup(

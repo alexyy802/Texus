@@ -107,16 +107,19 @@ class XVideosIE(InfoExtractor):
                 "%s said: %s" % (self.IE_NAME, clean_html(mobj.group(1))), expected=True
             )
 
-        title = self._html_search_regex(
-            (
-                r"<title>(?P<title>.+?)\s+-\s+XVID",
-                r'setVideoTitle\s*\(\s*(["\'])(?P<title>(?:(?!\1).)+)\1',
-            ),
-            webpage,
-            "title",
-            default=None,
-            group="title",
-        ) or self._og_search_title(webpage)
+        title = (
+            self._html_search_regex(
+                (
+                    r"<title>(?P<title>.+?)\s+-\s+XVID",
+                    r'setVideoTitle\s*\(\s*(["\'])(?P<title>(?:(?!\1).)+)\1',
+                ),
+                webpage,
+                "title",
+                default=None,
+                group="title",
+            )
+            or self._og_search_title(webpage)
+        )
 
         thumbnails = []
         for preference, thumbnail in enumerate(("", "169")):

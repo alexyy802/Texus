@@ -217,11 +217,14 @@ class InstagramIE(InfoExtractor):
             video_url = media.get("video_url")
             height = int_or_none(media.get("dimensions", {}).get("height"))
             width = int_or_none(media.get("dimensions", {}).get("width"))
-            description = try_get(
-                media,
-                lambda x: x["edge_media_to_caption"]["edges"][0]["node"]["text"],
-                compat_str,
-            ) or media.get("caption")
+            description = (
+                try_get(
+                    media,
+                    lambda x: x["edge_media_to_caption"]["edges"][0]["node"]["text"],
+                    compat_str,
+                )
+                or media.get("caption")
+            )
             title = media.get("title")
             thumbnail = media.get("display_src") or media.get("display_url")
             duration = float_or_none(media.get("video_duration"))

@@ -140,12 +140,15 @@ class TVPEmbedIE(InfoExtractor):
             "http://www.tvp.pl/sess/tvplayer.php?object_id=%s" % video_id, video_id
         )
 
-        error = self._html_search_regex(
-            r'(?s)<p[^>]+\bclass=["\']notAvailable__text["\'][^>]*>(.+?)</p>',
-            webpage,
-            "error",
-            default=None,
-        ) or clean_html(get_element_by_attribute("class", "msg error", webpage))
+        error = (
+            self._html_search_regex(
+                r'(?s)<p[^>]+\bclass=["\']notAvailable__text["\'][^>]*>(.+?)</p>',
+                webpage,
+                "error",
+                default=None,
+            )
+            or clean_html(get_element_by_attribute("class", "msg error", webpage))
+        )
         if error:
             raise ExtractorError(
                 "%s said: %s" % (self.IE_NAME, clean_html(error)), expected=True

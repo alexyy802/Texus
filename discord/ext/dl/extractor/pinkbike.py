@@ -63,12 +63,15 @@ class PinkbikeIE(InfoExtractor):
         self._sort_formats(formats)
 
         title = remove_end(self._og_search_title(webpage), " Video - Pinkbike")
-        description = self._html_search_regex(
-            r'(?s)id="media-description"[^>]*>(.+?)<',
-            webpage,
-            "description",
-            default=None,
-        ) or remove_start(self._og_search_description(webpage), title + ". ")
+        description = (
+            self._html_search_regex(
+                r'(?s)id="media-description"[^>]*>(.+?)<',
+                webpage,
+                "description",
+                default=None,
+            )
+            or remove_start(self._og_search_description(webpage), title + ". ")
+        )
         thumbnail = self._og_search_thumbnail(webpage)
         duration = int_or_none(
             self._html_search_meta("video:duration", webpage, "duration")

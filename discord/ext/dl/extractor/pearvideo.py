@@ -53,16 +53,19 @@ class PearVideoIE(InfoExtractor):
             "title",
             group="value",
         )
-        description = self._search_regex(
-            (
-                r'<div[^>]+\bclass=(["\'])summary\1[^>]*>(?P<value>[^<]+)',
-                r'<[^>]+\bdata-summary=(["\'])(?P<value>(?:(?!\1).)+)\1',
-            ),
-            webpage,
-            "description",
-            default=None,
-            group="value",
-        ) or self._html_search_meta("Description", webpage)
+        description = (
+            self._search_regex(
+                (
+                    r'<div[^>]+\bclass=(["\'])summary\1[^>]*>(?P<value>[^<]+)',
+                    r'<[^>]+\bdata-summary=(["\'])(?P<value>(?:(?!\1).)+)\1',
+                ),
+                webpage,
+                "description",
+                default=None,
+                group="value",
+            )
+            or self._html_search_meta("Description", webpage)
+        )
         timestamp = unified_timestamp(
             self._search_regex(
                 r'<div[^>]+\bclass=["\']date["\'][^>]*>([^<]+)',

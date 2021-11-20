@@ -91,16 +91,19 @@ class ElPaisIE(InfoExtractor):
         thumbnail = (
             None if thumbnail_suffix is None else prefix + thumbnail_suffix
         ) or self._og_search_thumbnail(webpage)
-        title = self._html_search_regex(
-            (
-                r"tituloVideo\s*=\s*'([^']+)'",
-                r'<h2 class="entry-header entry-title.*?>(.*?)</h2>',
-                r'<h1[^>]+class="titulo"[^>]*>([^<]+)',
-            ),
-            webpage,
-            "title",
-            default=None,
-        ) or self._og_search_title(webpage)
+        title = (
+            self._html_search_regex(
+                (
+                    r"tituloVideo\s*=\s*'([^']+)'",
+                    r'<h2 class="entry-header entry-title.*?>(.*?)</h2>',
+                    r'<h1[^>]+class="titulo"[^>]*>([^<]+)',
+                ),
+                webpage,
+                "title",
+                default=None,
+            )
+            or self._og_search_title(webpage)
+        )
         upload_date = unified_strdate(
             self._search_regex(
                 r'<p class="date-header date-int updated"\s+title="([^"]+)">',

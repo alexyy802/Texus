@@ -141,12 +141,15 @@ class YouPornIE(InfoExtractor):
             or self._html_search_meta("title", webpage, fatal=True)
         )
 
-        description = self._html_search_regex(
-            r'(?s)<div[^>]+\bid=["\']description["\'][^>]*>(.+?)</div>',
-            webpage,
-            "description",
-            default=None,
-        ) or self._og_search_description(webpage, default=None)
+        description = (
+            self._html_search_regex(
+                r'(?s)<div[^>]+\bid=["\']description["\'][^>]*>(.+?)</div>',
+                webpage,
+                "description",
+                default=None,
+            )
+            or self._og_search_description(webpage, default=None)
+        )
         thumbnail = self._search_regex(
             r'(?:imageurl\s*=|poster\s*:)\s*(["\'])(?P<thumbnail>.+?)\1',
             webpage,

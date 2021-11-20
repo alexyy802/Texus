@@ -8,8 +8,18 @@ import logging
 import inspect
 import sys
 
-from .events import Event, TrackStartEvent, TrackStuckEvent, TrackExceptionEvent, TrackEndEvent, QueueEndEvent, \
-    NodeConnectedEvent, NodeChangedEvent, NodeDisconnectedEvent, WebSocketClosedEvent
+from .events import (
+    Event,
+    TrackStartEvent,
+    TrackStuckEvent,
+    TrackExceptionEvent,
+    TrackEndEvent,
+    QueueEndEvent,
+    NodeConnectedEvent,
+    NodeChangedEvent,
+    NodeDisconnectedEvent,
+    WebSocketClosedEvent,
+)
 from .models import BasePlayer, DefaultPlayer, AudioTrack
 from .utils import format_time, parse_time, decode_track
 from .client import Client
@@ -26,11 +36,10 @@ def enable_debug_logging():
     Sets up a logger to stdout. This solely exists to make things easier for
     end-users who want to debug issues with audio.
     """
-    log = logging.getLogger('audio')
+    log = logging.getLogger("audio")
 
     fmt = logging.Formatter(
-        '[%(asctime)s] [audio] [%(levelname)s] %(message)s',
-        datefmt="%H:%M:%S"
+        "[%(asctime)s] [audio] [%(levelname)s] %(message)s", datefmt="%H:%M:%S"
     )
 
     handler = logging.StreamHandler(sys.stdout)
@@ -54,17 +63,18 @@ def add_event_hook(*hooks, event: Event = None):
         dispatched. Defaults to `None` which means the hook is dispatched on all events.
     """
     if event is not None and Event not in event.__bases__:
-        raise TypeError('Event parameter is not of type Event or None')
+        raise TypeError("Event parameter is not of type Event or None")
 
-    event_name = event.__name__ if event is not None else 'Generic'
+    event_name = event.__name__ if event is not None else "Generic"
     event_hooks = Client._event_hooks[event_name]
 
     for hook in hooks:
         if not callable(hook) or not inspect.iscoroutinefunction(hook):
-            raise TypeError('Hook is not callable or a coroutine')
+            raise TypeError("Hook is not callable or a coroutine")
 
         if hook not in event_hooks:
             event_hooks.append(hook)
+
 
 """
 Copyright Notice

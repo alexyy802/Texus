@@ -87,7 +87,9 @@ async def skip(ctx):
 @bot.command()
 async def volume(ctx, vol):
     player = music.get_player(guild_id=ctx.guild.id)
-    song, volume = await player.change_volume(float(vol) / 100)  # volume should be a float between 0 to 1
+    song, volume = await player.change_volume(
+        float(vol) / 100
+    )  # volume should be a float between 0 to 1
     await ctx.send(f"Changed volume for {song.name} to {volume * 100}%")
 
 
@@ -96,5 +98,6 @@ async def remove(ctx, index):
     player = music.get_player(guild_id=ctx.guild.id)
     song = await player.remove_from_queue(int(index))
     await ctx.send(f"Removed {song.name} from queue")
+
 
 bot.run("TOKEN")

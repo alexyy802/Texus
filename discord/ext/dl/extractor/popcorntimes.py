@@ -72,13 +72,16 @@ class PopcorntimesIE(InfoExtractor):
             fatal=False,
         )
 
-        thumbnail = self._search_regex(
-            r'<img[^>]+class=["\']video-preview[^>]+\bsrc=(["\'])(?P<value>(?:(?!\1).)+)\1',
-            webpage,
-            "thumbnail",
-            default=None,
-            group="value",
-        ) or self._og_search_thumbnail(webpage)
+        thumbnail = (
+            self._search_regex(
+                r'<img[^>]+class=["\']video-preview[^>]+\bsrc=(["\'])(?P<value>(?:(?!\1).)+)\1',
+                webpage,
+                "thumbnail",
+                default=None,
+                group="value",
+            )
+            or self._og_search_thumbnail(webpage)
+        )
 
         creator = self._html_search_meta(
             "video:director", webpage, "creator", default=None

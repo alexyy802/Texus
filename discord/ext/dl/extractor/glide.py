@@ -26,24 +26,30 @@ class GlideIE(InfoExtractor):
         title = self._html_search_regex(
             r"<title>(.+?)</title>", webpage, "title", default=None
         ) or self._og_search_title(webpage)
-        video_url = self._proto_relative_url(
-            self._search_regex(
-                r'<source[^>]+src=(["\'])(?P<url>.+?)\1',
-                webpage,
-                "video URL",
-                default=None,
-                group="url",
+        video_url = (
+            self._proto_relative_url(
+                self._search_regex(
+                    r'<source[^>]+src=(["\'])(?P<url>.+?)\1',
+                    webpage,
+                    "video URL",
+                    default=None,
+                    group="url",
+                )
             )
-        ) or self._og_search_video_url(webpage)
-        thumbnail = self._proto_relative_url(
-            self._search_regex(
-                r'<img[^>]+id=["\']video-thumbnail["\'][^>]+src=(["\'])(?P<url>.+?)\1',
-                webpage,
-                "thumbnail url",
-                default=None,
-                group="url",
+            or self._og_search_video_url(webpage)
+        )
+        thumbnail = (
+            self._proto_relative_url(
+                self._search_regex(
+                    r'<img[^>]+id=["\']video-thumbnail["\'][^>]+src=(["\'])(?P<url>.+?)\1',
+                    webpage,
+                    "thumbnail url",
+                    default=None,
+                    group="url",
+                )
             )
-        ) or self._og_search_thumbnail(webpage)
+            or self._og_search_thumbnail(webpage)
+        )
 
         return {
             "id": video_id,

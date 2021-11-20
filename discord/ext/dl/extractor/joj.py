@@ -62,16 +62,19 @@ class JojIE(InfoExtractor):
             "https://media.joj.sk/embed/%s" % video_id, video_id
         )
 
-        title = self._search_regex(
-            (
-                r'videoTitle\s*:\s*(["\'])(?P<title>(?:(?!\1).)+)\1',
-                r"<title>(?P<title>[^<]+)",
-            ),
-            webpage,
-            "title",
-            default=None,
-            group="title",
-        ) or self._og_search_title(webpage)
+        title = (
+            self._search_regex(
+                (
+                    r'videoTitle\s*:\s*(["\'])(?P<title>(?:(?!\1).)+)\1',
+                    r"<title>(?P<title>[^<]+)",
+                ),
+                webpage,
+                "title",
+                default=None,
+                group="title",
+            )
+            or self._og_search_title(webpage)
+        )
 
         bitrates = self._parse_json(
             self._search_regex(

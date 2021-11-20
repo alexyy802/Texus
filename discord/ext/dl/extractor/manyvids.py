@@ -51,15 +51,18 @@ class ManyVidsIE(InfoExtractor):
             group="url",
         )
 
-        title = self._html_search_regex(
-            (
-                r'<span[^>]+class=["\']item-title[^>]+>([^<]+)',
-                r'<h2[^>]+class=["\']h2 m-0["\'][^>]*>([^<]+)',
-            ),
-            webpage,
-            "title",
-            default=None,
-        ) or self._html_search_meta("twitter:title", webpage, "title", fatal=True)
+        title = (
+            self._html_search_regex(
+                (
+                    r'<span[^>]+class=["\']item-title[^>]+>([^<]+)',
+                    r'<h2[^>]+class=["\']h2 m-0["\'][^>]*>([^<]+)',
+                ),
+                webpage,
+                "title",
+                default=None,
+            )
+            or self._html_search_meta("twitter:title", webpage, "title", fatal=True)
+        )
 
         if any(p in webpage for p in ("preview_videos", "_preview.mp4")):
             title += " (Preview)"
