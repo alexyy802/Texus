@@ -62,7 +62,7 @@ from .interactions import *
 from .components import *
 from .threads import *
 from .bot import *
-from .commands import *
+from .application import *
 from .cog import Cog
 from .welcome_screen import *
 from .console import *
