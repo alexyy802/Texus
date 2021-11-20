@@ -1,8 +1,8 @@
-texus
+pep3003
 ==========
 
 .. image:: https://discord.com/api/guilds/910843156231249990/embed.png
-   :target: https://discord.gg/54f7UWNsAJ
+   :target: https://discord.gg/
    :alt: Discord server invite
 .. image:: https://img.shields.io/pypi/v/texus.svg
    :target: https://pypi.python.org/pypi/texus
@@ -14,7 +14,7 @@ texus
    :target: https://pypi.python.org/pypi/texus
    :alt: PyPI downloads
 
-A fork of pycord. texus is a modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
+A fork of pycord. pep3003 is a modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
 
 Key Features
 -------------
@@ -119,6 +119,6 @@ Links
 ------
 
 - `Documentation <https://docs.texus.dev/en/master/index.html>`_
-- `Official Discord Server <https://discord.gg/54f7UWNsAJ>`_
+- `Official Discord Server <https://discord.gg/>`_
 - `Discord Developers <https://discord.gg/discord-developers>`_
 - `Discord API <https://discord.gg/discord-api>`_
