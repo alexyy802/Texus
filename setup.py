@@ -81,9 +81,9 @@ packages = [
 ]
 
 setup(
-    name="texus",
-    author="Texus Development",
-    url="https://github.com/TexusDev/texus",
+    name="pep3003",
+    author="pep3003",
+    url="https://github.com/pep3003/pep3003",
     project_urls={
         "Documentation": "https://texus.readthedocs.io/en/latest/",
         "Issue tracker": "https://github.com/TexusDev/texus/issues",
