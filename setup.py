@@ -85,8 +85,8 @@ setup(
     author="pep3003",
     url="https://github.com/pep3003/pep3003",
     project_urls={
-        "Documentation": "https://texus.readthedocs.io/en/latest/",
-        "Issue tracker": "https://github.com/TexusDev/texus/issues",
+        "Documentation": "https://pep3003.readthedocs.io/en/latest/",
+        "Issue tracker": "https://github.com/pep3003/pep3003/issues",
     },
     version=version,
     packages=packages,
